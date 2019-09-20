@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import models.Rubro;
 import models.Usuario;
+import models.UsuarioInsert;
 import org.json.*;
 
 /**
@@ -108,7 +109,7 @@ public class UsuarioService {
     }
       
       
-      public String postUsuario(Usuario usuario) throws Exception{
+      public String postUsuario(UsuarioInsert usuario) throws Exception{
         String urlAPi = URL + "usuario/InsertUsuario";
         try {
             URL url = new URL(urlAPi);
@@ -120,12 +121,8 @@ public class UsuarioService {
             login.put("usuario_username", usuario.usuario_username);
             login.put("usuario_clave", usuario.usuario_clave);
             login.put("usuario_activo", usuario.usuario_activo);
-            
-        
-                login.put("cliente_id", usuario.cliente_id);
-         
-                login.put("profesional_id", usuario.profesional_id);    
-            
+            login.put("cliente_id", usuario.cliente_id);
+            login.put("profesional_id", usuario.profesional_id);                
             login.put("rol_id", usuario.rol_id);
 
             conn.setDoOutput(true);

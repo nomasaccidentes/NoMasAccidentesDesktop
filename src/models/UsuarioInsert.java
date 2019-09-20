@@ -5,33 +5,17 @@
  */
 package models;
 
-
-
 /**
  *
  * @author AlexF
  */
-public class Usuario {
-    
-    public final int ADMIN = 1;
-    public final int CLIENTE = 3;
-    public final int PROFESIONAL = 2;
-    
-    
-    
+public class UsuarioInsert {
     public int usuario_id;
     public String usuario_username;
     public String usuario_clave;
-
-    public Cliente cliente;
-    public Profesional profesional;
-    public Rol rol;
-    public int usuario_activo;
-    
-    public int cliente_id;
-    
-    public int profesional_id;
-    
+    public int usuario_activo;    
+    public int cliente_id;    
+    public int profesional_id;    
     public int rol_id;
 
     public int getUsuario_id() {
@@ -56,30 +40,6 @@ public class Usuario {
 
     public void setUsuario_clave(String usuario_clave) {
         this.usuario_clave = usuario_clave;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Profesional getProfesional() {
-        return profesional;
-    }
-
-    public void setProfesional(Profesional profesional) {
-        this.profesional = profesional;
-    }
-
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
     }
 
     public int getUsuario_activo() {
@@ -113,13 +73,6 @@ public class Usuario {
     public void setRol_id(int rol_id) {
         this.rol_id = rol_id;
     }
-
-    @Override
-    public String toString() {
-        return "Usuario{" + "ADMIN=" + ADMIN + ", CLIENTE=" + CLIENTE + ", PROFESIONAL=" + PROFESIONAL + ", usuario_id=" + usuario_id + ", usuario_username=" + usuario_username + ", usuario_clave=" + usuario_clave + ", cliente=" + cliente + ", profesional=" + profesional + ", rol=" + rol + ", usuario_activo=" + usuario_activo + ", cliente_id=" + cliente_id + ", profesional_id=" + profesional_id + ", rol_id=" + rol_id + '}';
-    }
-
-  
     
     
 }

@@ -20,6 +20,7 @@ import models.ProfesionalCombobox;
 import models.RolCombobox;
 import models.Rubro;
 import models.Usuario;
+import models.UsuarioInsert;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -367,7 +368,7 @@ public class MantenedorUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-        Usuario u = new Usuario();
+        UsuarioInsert u = new UsuarioInsert();
         
         u.usuario_username = txtUsuarioUsernameInsert.getText();
         u.usuario_clave = txtUsuarioClaveInsert.getText();
@@ -376,30 +377,16 @@ public class MantenedorUsuario extends javax.swing.JFrame {
         if(radioActivoInsertUsuario.isSelected()){
             activo = 1;
         }
-        u.usuario_activo = activo;
-        
-       if(cmbProfesional.getSelectedItem().equals("Seleccione")){
-           u.profesional_id = 0;
-       }else{
-           u.profesional_id = cmbProfesional.getItemAt(cmbProfesional.getSelectedIndex()).getProfesional_id();
-       }
-       
-       if(cmbCliente.getSelectedItem().equals("Seleccione")){
-           u.cliente_id = 0;
-       }else{
-           u.cliente_id = cmbCliente.getItemAt(cmbCliente.getSelectedIndex()).getCliente_id();
-       }
-       
-       if(cmbRol.getSelectedItem().equals("Seleccione")){
-           u.rol_id = 0;
-       }else{
-           u.rol_id = cmbRol.getItemAt(cmbRol.getSelectedIndex()).getRol_id();
-       }
+        u.usuario_activo = activo;        
+        u.profesional_id = cmbProfesional.getItemAt(cmbProfesional.getSelectedIndex()).getProfesional_id();
+        u.cliente_id = cmbCliente.getItemAt(cmbCliente.getSelectedIndex()).getCliente_id();
+        u.rol_id = cmbRol.getItemAt(cmbRol.getSelectedIndex()).getRol_id();
+      
 
         
         
         
-        System.out.println(u);
+        System.out.println(u.toString());
         UsuarioService us = new UsuarioService();
         
         try {
