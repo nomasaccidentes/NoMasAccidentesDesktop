@@ -212,7 +212,6 @@ public class Principal extends javax.swing.JFrame {
                     p.setVisible(true);
                     this.setVisible(false);
                 }
-                JOptionPane.showMessageDialog(null, "Bienenvido " + data.getString("usuario_username"));
             }else{
                 JOptionPane.showMessageDialog(null, "Usuario Incorrecto ");
             }
@@ -223,34 +222,7 @@ public class Principal extends javax.swing.JFrame {
             
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-
-        
-        
-        
-        //int rol_id = response.getJSONObject(0).getInt("ROL_ID");
-        
-        
-        
-        
-//        Gson gson = new Gson();  
-//        Usuario[] usuarioArray = gson.fromJson(response.toString(), Usuario[].class);
-        
-//        System.out.println(response);
-            
-//        System.out.println(usuarioArray);
-//        for(int i = 0 ; i < array.length() ; i++){
-//           String arr = array.getJSONObject(i).getString("interestKey");
-//           
-//            System.out.println(arr);
-//        }
-        Login login = new Login();
-//        int rol = response.getInt("USUARIO_ID");
-        
-        System.out.println();
-//        System.out.println(txtPasswordLogin.getText());
-//        System.out.println(txtUserLogin.getText());
-        
+        }        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
