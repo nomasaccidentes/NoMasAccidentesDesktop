@@ -28,6 +28,14 @@ public class Rol {
     public void setRol_activo(int rol_activo) {
         this.rol_activo = rol_activo;
     }
+
+    @Override
+    public String toString() {
+        return ""+ this.getRol_nombre() + " - " + this.getRol_activo();
+    
+    }
+    
+    
     
     
 

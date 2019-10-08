@@ -61,12 +61,15 @@ public class RolService {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+
             JSONObject login = new JSONObject();
             login.put("rol_nombre", rol.rol_nombre);
             login.put("rol_activo", rol.rol_activo);
 
-            System.out.println(login);
+            
+            
+            System.out.println(rol.toString());
             conn.setDoOutput(true);
             
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -77,9 +80,7 @@ public class RolService {
             wr.close();
 
             int responseCode = conn.getResponseCode();
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + login.toString());
-            System.out.println("Response Code : " + responseCode);
+
 
             
             if(responseCode == 404){
@@ -88,7 +89,7 @@ public class RolService {
             
             
             BufferedReader in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream()));
+                    new InputStreamReader(conn.getInputStream() , "UTF-8"));
             String inputLine;
             StringBuffer response = new StringBuffer();
 

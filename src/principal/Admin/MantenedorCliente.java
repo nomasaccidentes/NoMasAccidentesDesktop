@@ -34,7 +34,7 @@ public class MantenedorCliente extends javax.swing.JFrame {
         initComponents();
         
         this.jTableClientes.setModel(showData());
-        
+        labelPrueba.setVisible(false);
         RubroService rs = new RubroService();
         
         JSONArray array = rs.getRubro();
