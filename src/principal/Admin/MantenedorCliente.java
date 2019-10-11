@@ -476,7 +476,10 @@ public class MantenedorCliente extends javax.swing.JFrame {
         try {
             cs.postCliente(cliente);
             JOptionPane.showMessageDialog(null, "Cliente insertado correctamente");    
+            this.setVisible(false);
+            MantenedorCliente m = new MantenedorCliente();
             
+            m.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(MantenedorCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -505,6 +508,11 @@ public class MantenedorCliente extends javax.swing.JFrame {
         try {
             cs.putCliente(c, cliente_id);            
             JOptionPane.showMessageDialog(null, "Cliente editado correctamente");   
+            
+            /*REFRESCA LA PAGINA*/
+            this.setVisible(false);
+            MantenedorCliente m = new MantenedorCliente();
+            m.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(MantenedorCliente.class.getName()).log(Level.SEVERE, null, ex);
         }

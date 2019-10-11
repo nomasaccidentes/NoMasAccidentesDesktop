@@ -31,7 +31,8 @@ public class MantendorRol extends javax.swing.JFrame {
        
         
         this.jTableRol.setModel(showData());
-        this.getSelectModel();
+        getSelectModel();
+        this.jLabel5.setVisible(false);
     }
     
     
@@ -41,6 +42,8 @@ public class MantendorRol extends javax.swing.JFrame {
                    // do some actions here, for example
                    // print first column value from selected row
                    String rolId = jTableRol.getValueAt(jTableRol.getSelectedRow(), 0).toString();
+                   
+                   System.out.println(rolId);
                    String rolEstado = jTableRol.getValueAt(jTableRol.getSelectedRow(), 1).toString();
                    String rolActivo = jTableRol.getValueAt(jTableRol.getSelectedRow(), 2).toString();
                    txtEditNombreRol.setText(rolEstado);
@@ -73,7 +76,7 @@ public class MantendorRol extends javax.swing.JFrame {
                 JSONObject row = array.getJSONObject(i);
                 dtm.addRow(new Object[]{row.getInt("ROL_ID"),row.getString("ROL_NOMBRE"), row.get("ROL_ACTIVO")});
             }
-        
+        dtm.fireTableDataChanged();
         return dtm;
         
     }
@@ -111,10 +114,8 @@ public class MantendorRol extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setExtendedState(6);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -128,7 +129,7 @@ public class MantendorRol extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 10, -1, -1));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 10, -1, -1));
 
         jPanel2.setOpaque(false);
 
@@ -280,37 +281,20 @@ public class MantendorRol extends javax.swing.JFrame {
 
         jLabel5.getAccessibleContext().setAccessibleName("lblRolId");
 
-        jButton3.setText("Eliminar Rol");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 995, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(21, 21, 21))
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 995, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(jButton3))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -327,10 +311,11 @@ public class MantendorRol extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,12 +347,11 @@ public class MantendorRol extends javax.swing.JFrame {
         int rolId = Integer.parseInt(jLabel5.getText());        
         try {
             rolService.putRol(rol, rolId);
-            jTableRol.setVisible(false);
-            jTableRol.setVisible(true);
-            this.jTableRol.setModel(showData());
+
             JOptionPane.showMessageDialog(null, "Rol editado correctamente");
-        
-      
+            this.setVisible(false);
+            MantendorRol m = new MantendorRol();
+            m.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(MantendorRol.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -390,29 +374,20 @@ public class MantendorRol extends javax.swing.JFrame {
         RolService rolService = new RolService();
         try {
             rolService.postRol(r);
-             this.jTableRol.setModel(showData());
+             
              
             JOptionPane.showMessageDialog(null, "Rol Insertado correctamente");
+//            this.jTableRol.setModel(showData());
+            
+            
+            this.setVisible(false);
+            MantendorRol m = new MantendorRol();
+            m.setVisible(true);
+            
         } catch (Exception ex) {
             Logger.getLogger(MantendorRol.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        
-        RolService rolService = new RolService();
-        
-        
-        int rolId = Integer.parseInt(jLabel5.getText());     
-        
-        try {
-            rolService.deleteRol(rolId);
-            JOptionPane.showMessageDialog(null, "Rol Eliminado correctamente");
-        } catch (Exception ex) {
-            Logger.getLogger(MantendorRol.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -467,7 +442,6 @@ public class MantendorRol extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

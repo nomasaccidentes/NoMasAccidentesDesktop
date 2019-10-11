@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import models.ClienteCombobox;
 import models.ProfesionalCombobox;
@@ -37,7 +39,7 @@ public class MantenedorUsuario extends javax.swing.JFrame {
         initComponents();
         
         jTableUsuarios.setModel(showData());
-        
+        txtUsuarioid.setVisible(false);
         ClienteService cs = new ClienteService();
         
         String array = cs.getCliente();     
@@ -74,6 +76,28 @@ public class MantenedorUsuario extends javax.swing.JFrame {
                         new RolCombobox(row.getInt("ROL_ID"), row.getString("ROL_NOMBRE"))
                 );
         }
+        
+        
+         this.jTableUsuarios.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                String rubroId = jTableUsuarios.getValueAt(jTableUsuarios.getSelectedRow(), 0).toString();
+                String rubroEstado = jTableUsuarios.getValueAt(jTableUsuarios.getSelectedRow(), 1).toString();
+                String rubroActivo = jTableUsuarios.getValueAt(jTableUsuarios.getSelectedRow(), 2).toString();
+                if(rubroActivo.equalsIgnoreCase("1")){
+                    radioActivaUsuario.setSelected(true);
+                }else if(rubroActivo.equalsIgnoreCase("0")){
+                    radioInactivaUsuario.setSelected(true);
+                }
+                jLabel6.setText(rubroId);
+                jLabel6.setVisible(false);
+                txtUsuarioid.setText(rubroId);
+
+            }
+        });      
+        
+        
+        
+        
     }
 
     
@@ -117,9 +141,10 @@ public class MantenedorUsuario extends javax.swing.JFrame {
         jTableUsuarios = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radioActivaUsuario = new javax.swing.JRadioButton();
+        radioInactivaUsuario = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
+        txtUsuarioid = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -185,13 +210,13 @@ public class MantenedorUsuario extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Editar Usuario"));
 
-        jLabel2.setText("Estado Usuariop");
+        jLabel2.setText("Estado Usuario");
 
-        buttonGroupUsuarioEdit.add(jRadioButton1);
-        jRadioButton1.setText("Activo");
+        buttonGroupUsuarioEdit.add(radioActivaUsuario);
+        radioActivaUsuario.setText("Activo");
 
-        buttonGroupUsuarioEdit.add(jRadioButton2);
-        jRadioButton2.setText("Inactivo");
+        buttonGroupUsuarioEdit.add(radioInactivaUsuario);
+        radioInactivaUsuario.setText("Inactivo");
 
         jButton1.setText("Editar Usuario");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -199,6 +224,8 @@ public class MantenedorUsuario extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        txtUsuarioid.setText("jLabel9");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -211,10 +238,14 @@ public class MantenedorUsuario extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jRadioButton1)
+                        .addComponent(radioActivaUsuario)
                         .addGap(10, 10, 10)
-                        .addComponent(jRadioButton2)))
-                .addContainerGap(190, Short.MAX_VALUE))
+                        .addComponent(radioInactivaUsuario)))
+                .addContainerGap(196, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtUsuarioid)
+                .addGap(65, 65, 65))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,9 +253,11 @@ public class MantenedorUsuario extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
-                .addGap(72, 72, 72)
+                    .addComponent(radioActivaUsuario)
+                    .addComponent(radioInactivaUsuario))
+                .addGap(15, 15, 15)
+                .addComponent(txtUsuarioid)
+                .addGap(43, 43, 43)
                 .addComponent(jButton1)
                 .addContainerGap(104, Short.MAX_VALUE))
         );
@@ -374,6 +407,35 @@ public class MantenedorUsuario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
+        
+        UsuarioInsert user = new UsuarioInsert();
+        
+        
+        int activo = 0;
+        
+        if(radioActivaUsuario.isSelected()){
+            activo = 1;
+        }
+        
+        user.usuario_activo = activo;
+        UsuarioService u = new UsuarioService();
+        
+        
+        try {
+            u.putUsuario(user, Integer.parseInt(txtUsuarioid.getText()));
+            JOptionPane.showMessageDialog(null, "Usuario editado correctamente");
+            
+            this.setVisible(false);
+            MantenedorUsuario m = new MantenedorUsuario();
+            m.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(MantenedorUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -414,6 +476,11 @@ public class MantenedorUsuario extends javax.swing.JFrame {
         try {
             us.postUsuario(u);
             JOptionPane.showMessageDialog(null, "Usuario Agregado");
+            
+            this.setVisible(false);
+            MantenedorUsuario m = new MantenedorUsuario();
+            
+            m.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(MantenedorUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -482,13 +549,14 @@ public class MantenedorUsuario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableUsuarios;
+    private javax.swing.JRadioButton radioActivaUsuario;
     private javax.swing.JRadioButton radioActivoInsertUsuario;
+    private javax.swing.JRadioButton radioInactivaUsuario;
     private javax.swing.JRadioButton radioInactivoInsertUsuario;
     private javax.swing.JTextField txtUsuarioClaveInsert;
     private javax.swing.JTextField txtUsuarioUsernameInsert;
+    private javax.swing.JLabel txtUsuarioid;
     // End of variables declaration//GEN-END:variables
 }

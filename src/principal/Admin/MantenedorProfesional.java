@@ -32,6 +32,7 @@ public class MantenedorProfesional extends javax.swing.JFrame {
         
         jTableProfesional.setModel(showData());
         
+        txtIdProfesional.setVisible(false);
          this.jTableProfesional.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
                public void valueChanged(ListSelectionEvent event) {
                    // do some actions here, for example
@@ -390,6 +391,12 @@ public class MantenedorProfesional extends javax.swing.JFrame {
         try {
             ps.postProfesional(p);
             JOptionPane.showMessageDialog(null, "Profesional registrado correctamente");
+            
+            
+            this.setVisible(false);
+            
+            MantenedorProfesional m = new MantenedorProfesional();
+            m.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(MantenedorProfesional.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -417,6 +424,10 @@ public class MantenedorProfesional extends javax.swing.JFrame {
         try {
             ps.putProfesional(p, idProfesional);
             JOptionPane.showMessageDialog(null, "Profesional Editado correctamente");
+            this.setVisible(false);
+            
+            MantenedorProfesional m = new MantenedorProfesional();
+            m.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(MantenedorProfesional.class.getName()).log(Level.SEVERE, null, ex);
         }

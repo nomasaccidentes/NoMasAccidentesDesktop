@@ -354,7 +354,11 @@ public class MantenedorRubro extends javax.swing.JFrame {
         
         try {
             rs.postRubro(r);
-            JOptionPane.showConfirmDialog(null, "Rubro insertado correctamebte");
+            JOptionPane.showMessageDialog(null, "Rubro insertado correctamebte");
+            
+            this.setVisible(false);
+            MantenedorRubro m = new MantenedorRubro();
+            m.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(MantenedorRubro.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -378,6 +382,9 @@ public class MantenedorRubro extends javax.swing.JFrame {
         try {
             rs.putRubro(r, rubroId);
             JOptionPane.showMessageDialog(null, "Rubro Editado correctamebte");
+            this.setVisible(false);
+            MantenedorRubro m = new MantenedorRubro();
+            m.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(MantenedorRubro.class.getName()).log(Level.SEVERE, null, ex);
         }

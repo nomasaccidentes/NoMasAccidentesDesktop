@@ -192,8 +192,15 @@ public class Principal extends javax.swing.JFrame {
                 JSONObject data = obj.getJSONObject("data");
                 
                 int rol_id = data.getJSONObject("rol").getInt("rol_id");
+                int usuarioActivo = data.getInt("usuario_activo");
                 
-                if(rol_id == u.ADMIN){
+                if(usuarioActivo == 0){
+                    JOptionPane.showMessageDialog(null, "Usuario Inactivo");
+                    return ;
+                }
+                
+                
+                if(rol_id == u.ADMIN ){
                     JOptionPane.showMessageDialog(null, "Bienvenido Admin");
                     DashboardAdmin d = new DashboardAdmin();
                     d.setVisible(true);
