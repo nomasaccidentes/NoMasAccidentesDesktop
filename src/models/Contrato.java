@@ -12,22 +12,14 @@ import java.util.Date;
  * @author AlexF
  */
 public class Contrato {
-    public int contrato_id;
     public String contrato_descripcion;
-    public Date contrato_fecha_inicio;
-    public Date contrato_fecha_fin;
+    public String contrato_fecha_inicio;
+    public String contrato_fecha_fin;
     public int cant_capacitacion;
     public int cant_asesoria;
     public int contrato_activo;
     public int cliente_id;
 
-    public int getContrato_id() {
-        return contrato_id;
-    }
-
-    public void setContrato_id(int contrato_id) {
-        this.contrato_id = contrato_id;
-    }
 
     public String getContrato_descripcion() {
         return contrato_descripcion;
@@ -37,19 +29,19 @@ public class Contrato {
         this.contrato_descripcion = contrato_descripcion;
     }
 
-    public Date getContrato_fecha_inicio() {
+    public String getContrato_fecha_inicio() {
         return contrato_fecha_inicio;
     }
 
-    public void setContrato_fecha_inicio(Date contrato_fecha_inicio) {
+    public void setContrato_fecha_inicio(String contrato_fecha_inicio) {
         this.contrato_fecha_inicio = contrato_fecha_inicio;
     }
 
-    public Date getContrato_fecha_fin() {
+    public String getContrato_fecha_fin() {
         return contrato_fecha_fin;
     }
 
-    public void setContrato_fecha_fin(Date contrato_fecha_fin) {
+    public void setContrato_fecha_fin(String contrato_fecha_fin) {
         this.contrato_fecha_fin = contrato_fecha_fin;
     }
 
@@ -84,6 +76,15 @@ public class Contrato {
     public void setCliente_id(int cliente_id) {
         this.cliente_id = cliente_id;
     }
+
+    @Override
+    public String toString() {
+        return "Contrato{" + ", contrato_descripcion=" + contrato_descripcion + ", contrato_fecha_inicio=" + contrato_fecha_inicio + ", contrato_fecha_fin=" + contrato_fecha_fin + ", cant_capacitacion=" + cant_capacitacion + ", cant_asesoria=" + cant_asesoria + ", contrato_activo=" + contrato_activo + ", cliente_id=" + cliente_id + '}';
+    }
+
+    
+    
+    
     
     
 }

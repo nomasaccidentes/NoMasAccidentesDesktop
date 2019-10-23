@@ -7,6 +7,7 @@ package principal.Admin;
 
 import api.ClienteService;
 import api.ContratoService;
+import api.PagoContratoService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.DatatypeConverter;
 import models.ClienteCombobox;
 import models.Contrato;
+import models.PagoContrato;
 import models.Usuario;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -84,6 +86,9 @@ public class MantendorContrato extends javax.swing.JFrame {
     private void initComponents() {
 
         btnGroupEstadoContratoInsert = new javax.swing.ButtonGroup();
+        jDatePickerUtil1 = new org.jdatepicker.util.JDatePickerUtil();
+        jDatePickerUtil2 = new org.jdatepicker.util.JDatePickerUtil();
+        utilDateModel1 = new org.jdatepicker.impl.UtilDateModel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -98,14 +103,14 @@ public class MantendorContrato extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtDescripcionContrato = new javax.swing.JTextField();
-        txtFechaFin = new javax.swing.JTextField();
-        txtFechaInicio = new javax.swing.JTextField();
         txtCantCapacitaciones = new javax.swing.JTextField();
         txtCantAsesorias = new javax.swing.JTextField();
         radioActivoContratoInsert = new javax.swing.JRadioButton();
         radioInactivoContratoInsert = new javax.swing.JRadioButton();
         cmbClienteContrato = new javax.swing.JComboBox<ClienteCombobox>();
         jButton2 = new javax.swing.JButton();
+        txtFechaInicio = new com.toedter.calendar.JDateChooser();
+        txtFechaFin = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -202,25 +207,26 @@ public class MantendorContrato extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtFechaInicio)
-                                    .addComponent(txtFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                                    .addComponent(txtDescripcionContrato))
-                                .addGap(68, 68, 68)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(radioActivoContratoInsert)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(radioInactivoContratoInsert))
-                                    .addComponent(txtCantAsesorias)
-                                    .addComponent(cmbClienteContrato, 0, 167, Short.MAX_VALUE)))
+                                    .addComponent(txtDescripcionContrato)
+                                    .addComponent(txtFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCantCapacitaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCantCapacitaciones, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                                    .addComponent(txtFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(68, 68, 68)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(radioActivoContratoInsert)
+                                .addGap(29, 29, 29)
+                                .addComponent(radioInactivoContratoInsert))
+                            .addComponent(txtCantAsesorias)
+                            .addComponent(cmbClienteContrato, 0, 167, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(271, 271, 271)
                         .addComponent(jButton2)))
@@ -236,13 +242,20 @@ public class MantendorContrato extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(txtDescripcionContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel5)
+                            .addComponent(txtCantCapacitaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -256,13 +269,9 @@ public class MantendorContrato extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(cmbClienteContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtCantCapacitaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(72, 72, 72)
+                .addGap(161, 161, 161)
                 .addComponent(jButton2)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -276,7 +285,9 @@ public class MantendorContrato extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 541, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -284,9 +295,9 @@ public class MantendorContrato extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(13, 13, 13)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -305,6 +316,7 @@ public class MantendorContrato extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         
+        
         Contrato c =new Contrato();
         
         c.cant_asesoria = Integer.parseInt(txtCantAsesorias.getText());
@@ -316,33 +328,57 @@ public class MantendorContrato extends javax.swing.JFrame {
         }
         c.contrato_activo = activo;
         
-        c.contrato_descripcion = txtDescripcionContrato.getText();
-//        c.contrato_fecha_fin = txtFechaFin.getText();
-        try {
-            Date dateIni=new SimpleDateFormat("yyyy-mm-dd").parse(txtFechaInicio.getText());  
-            Date dateFin=new SimpleDateFormat("yyyy-mm-dd").parse(txtFechaFin.getText());  
+        
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String startDateString = dateFormat.format(txtFechaInicio.getDate());
+        String endDateString = dateFormat.format(txtFechaFin.getDate());
+
+        
+        
+        c.contrato_fecha_inicio = startDateString;
+        c.contrato_fecha_fin = endDateString;
             
-            c.contrato_fecha_fin = dateFin;
-            c.contrato_fecha_inicio = dateIni;
-        } catch (ParseException ex) {
-            Logger.getLogger(MantendorContrato.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        System.out.println(txtFechaInicio.getDateFormatString());
+             
+
+        c.contrato_descripcion = txtDescripcionContrato.getText();
+       
+     
         
-        if(cmbClienteContrato.getSelectedItem().equals("Seleccione")){
-           c.cliente_id = 0;
-       }else{
-           c.cliente_id = cmbClienteContrato.getItemAt(cmbClienteContrato.getSelectedIndex()).getCliente_id();
-       }
-        
-        
-        
-        
-        System.out.println(c);
+        c.cliente_id = cmbClienteContrato.getItemAt(cmbClienteContrato.getSelectedIndex()).getCliente_id();
         ContratoService contratoService = new ContratoService();
+        
+        
+        
+        
+       
+           
+      
+        
+        
         
         try {
             contratoService.postContrato(c);
             JOptionPane.showMessageDialog(null, "Contrato Agregado");
+            
+             try {
+                 
+                         PagoContrato p = new PagoContrato();
+
+                p.clienteId = c.cliente_id;
+                p.pagoContratoDescripcion = txtDescripcionContrato.getText();
+                p.pagoContratoVcto = startDateString;
+
+                
+                 System.out.println(p.toString());
+                PagoContratoService ps = new PagoContratoService();
+                ps.postPagoContrato(p);
+                JOptionPane.showMessageDialog(null, "Pagos asociados al contrato agregados");
+
+            } catch (Exception ex) {
+                Logger.getLogger(MantendorContrato.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (Exception ex) {
             Logger.getLogger(MantendorContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -392,6 +428,8 @@ public class MantendorContrato extends javax.swing.JFrame {
     private javax.swing.JComboBox<ClienteCombobox> cmbClienteContrato;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
+    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -409,7 +447,8 @@ public class MantendorContrato extends javax.swing.JFrame {
     private javax.swing.JTextField txtCantAsesorias;
     private javax.swing.JTextField txtCantCapacitaciones;
     private javax.swing.JTextField txtDescripcionContrato;
-    private javax.swing.JTextField txtFechaFin;
-    private javax.swing.JTextField txtFechaInicio;
+    private com.toedter.calendar.JDateChooser txtFechaFin;
+    private com.toedter.calendar.JDateChooser txtFechaInicio;
+    private org.jdatepicker.impl.UtilDateModel utilDateModel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -53,6 +53,37 @@ public class ContratoService {
         
         return null;
     }
+      
+    public String getLastInsertContratoId(){
+        String urlAPi = URL + "contrato/getLastContrato";
+        try {
+            URL url = new URL(urlAPi);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            
+            if(conn.getResponseCode() != 200){
+                 throw new RuntimeException("Failed : HTTP Error code : " + conn.getResponseCode());
+            }
+            
+            
+                        BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            JSONObject obj = new JSONObject(response);
+
+            return response.toString();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        return null;
+    }
     
      public String postContrato(Contrato c) throws Exception{
         String urlAPi = URL + "contrato/InsertContrato";
