@@ -219,6 +219,7 @@ public class MantenedorCliente extends javax.swing.JFrame {
 
         jLabel6.setText("Rubro Cliente");
 
+        cmbSelectorRubroCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione" }));
         cmbSelectorRubroCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbSelectorRubroClienteActionPerformed(evt);
@@ -456,6 +457,10 @@ public class MantenedorCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
+        
+        
+        
+        
         ClienteService cs = new ClienteService();
         
         String nombreCliente = txtNombreClienteInsert.getText();
@@ -464,6 +469,25 @@ public class MantenedorCliente extends javax.swing.JFrame {
         if(radioActivoClienteInsert.isSelected()){
             activo = 1;
         }
+        
+        /**
+         * Validaciones para los distintos campos
+         */
+        
+        if(nombreCliente.trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Nombre de cliente no peude ser vacio");
+            return;
+        }else if(direccionCliente.trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Dirección de cliente no peude ser vacio");
+            return;
+        }else if(txtRutClienteInsert.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Rut de cliente no peude ser vacio");
+            return;
+        }else if(cmbSelectorRubroCliente.getSelectedIndex() == 0){
+             JOptionPane.showMessageDialog(null, "Debe seleccionar un rubro para el cliente.");
+            return;
+        }
+        
         
         Cliente cliente =  new Cliente();
         
@@ -488,6 +512,22 @@ public class MantenedorCliente extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        
+        
+        if(txtNombreClienteEdit.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Nombre de cliente no peude ser vacio");
+            return;
+        }else if(txtDireccionClienteEdit.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Dirección de cliente no peude ser vacio");
+            return;
+        }else if(txtRutClienteEdit.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Rut de cliente no peude ser vacio");
+            return;
+        }else if(cmbRubroClienteEdit.getSelectedIndex() == 0){
+             JOptionPane.showMessageDialog(null, "Debe seleccionar un rubro para el cliente.");
+            return;
+        }
+        
         
         
         Cliente c = new Cliente();

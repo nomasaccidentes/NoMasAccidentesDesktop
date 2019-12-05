@@ -340,10 +340,15 @@ public class MantendorRol extends javax.swing.JFrame {
             activo = 1;
         }
         
+        
+        if(txtEditNombreRol.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Nombre de Rol no puede ser vacio");
+            return;
+        }
         RolService rolService = new RolService();
         Rol rol = new Rol();
         rol.setRol_activo(activo);
-        rol.setRol_nombre(txtEditNombreRol.getText());
+        rol.setRol_nombre(txtEditNombreRol.getText().trim());
         int rolId = Integer.parseInt(jLabel5.getText());        
         try {
             rolService.putRol(rol, rolId);
@@ -358,7 +363,7 @@ public class MantendorRol extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+          // TODO add your handling code here:
         
         String nombreRol = txtNombreRolInsert.getText();
         int activo = 0;
@@ -367,19 +372,21 @@ public class MantendorRol extends javax.swing.JFrame {
             activo = 1;
         }
         
+        if(nombreRol.trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Nombre de Rol no puede ser vacio");
+            return;
+        }
+        
         Rol r = new Rol();
         r.setRol_activo(activo);
-        r.setRol_nombre(nombreRol);
+        r.setRol_nombre(nombreRol.trim());
+        
+        
         
         RolService rolService = new RolService();
         try {
             rolService.postRol(r);
-             
-             
             JOptionPane.showMessageDialog(null, "Rol Insertado correctamente");
-//            this.jTableRol.setModel(showData());
-            
-            
             this.setVisible(false);
             MantendorRol m = new MantendorRol();
             m.setVisible(true);

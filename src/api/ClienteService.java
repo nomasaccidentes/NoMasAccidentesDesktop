@@ -72,7 +72,6 @@ public class ClienteService {
             login.put("cliente_rut", cliente.cliente_rut);
             login.put("rubro_id", cliente.rubro_id);
 
-            System.out.println(login);
             conn.setDoOutput(true);
             
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -121,7 +120,6 @@ public class ClienteService {
             login.put("cliente_rut", cliente.cliente_rut);
             login.put("rubro_id", cliente.rubro_id);
 
-            System.out.println(login);
             conn.setDoOutput(true);
             
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -132,15 +130,9 @@ public class ClienteService {
             wr.close();
 
             int responseCode = conn.getResponseCode();
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + login.toString());
-            System.out.println("Response Code : " + responseCode);
-
-            
             if(responseCode == 404){
                 return "404";
             }
-            
             
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(conn.getInputStream()));

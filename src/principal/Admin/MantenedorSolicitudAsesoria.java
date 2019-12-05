@@ -5,9 +5,13 @@
  */
 package principal.Admin;
 
+import api.AsesoriaService;
 import api.NoMasAccidentesService;
+import api.ProfesionalService;
 import api.RubroService;
 import api.SolicitudAsesoriaService;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -16,7 +20,9 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import models.Asesoria;
 import models.EstadoSolicitudCombobox;
+import models.ProfesionalCombobox;
 import models.Rubro;
 import models.SolicitudAsesoria;
 import org.json.JSONArray;
@@ -33,11 +39,12 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
      */
     public MantenedorSolicitudAsesoria() {
         initComponents();
-        
+        lblContratoIdAsesoria.setVisible(false);
         lblEditaSolicitudAsesoria.setVisible(false);
         jTableSolicitudAsesoria.setModel(showData());
         NoMasAccidentesService nmas = new NoMasAccidentesService();
-        
+        cmbProfesional.setVisible(false);
+        lblNombreProfesional.setVisible(false);
         JSONArray array = nmas.getEstadoSolicitud();
         ArrayList arr = new ArrayList();
           cmbEstadoSolicitud.addItem(
@@ -54,8 +61,11 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
          this.jTableSolicitudAsesoria.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
                public void valueChanged(ListSelectionEvent event) {             
                 String p_id = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 0).toString();
+                String contrato_id = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 2).toString();
                 String sol_estado = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 3).toString();
                 
+                
+                lblContratoIdAsesoria.setText(contrato_id);
                 lblEditaSolicitudAsesoria.setText(p_id);
                 for (int i=0; i < cmbEstadoSolicitud.getModel().getSize(); i++)
                 {
@@ -66,7 +76,37 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
                     }
                 }
                }
-           });      
+           });  
+         
+           ProfesionalService ps = new ProfesionalService();
+        
+            JSONArray dataPro = ps.getProfesional();
+
+            for (int j = 0; j < dataPro.length(); j++) {
+                    JSONObject row = dataPro.getJSONObject(j);
+                     cmbProfesional.addItem(
+                            new ProfesionalCombobox(row.getInt("PROFESIONAL_ID"), row.getString("PROFESIONAL_NOMBRE"), row.getString("PROFESIONAL_APELLIDO"))
+                    );
+            }
+        
+            cmbEstadoSolicitud.addItemListener(new ItemListener() {
+                public void itemStateChanged(ItemEvent arg0) {
+                    //Do Something
+
+                    if(arg0.getItem().toString().equalsIgnoreCase("Aprobado")){
+                        lblNombreProfesional.setVisible(true);
+                        cmbProfesional.setVisible(true);
+                    }else{
+                        lblNombreProfesional.setVisible(false);
+                        cmbProfesional.setVisible(false);
+                    }
+                }
+            });
+//          System.out.println(cmbEstadoSolicitudCapacitacion.getItemAt(cmbEstadoSolicitudCapacitacion.getSelectedIndex()).ESTADO_SOLICITUD_ID);
+          
+//          cmbEstadoSolicitudCapacitacion.getItemListeners(new ListSelectionEvent(ps, WIDTH, WIDTH, rootPaneCheckingEnabled))
+          
+    
     }
     
     
@@ -90,7 +130,7 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
                 dtm.addRow(new Object[]{
                     row.getInt("SOLICITUD_ASESORIA_ID"),
                     row.get("SOLICITUD_ASESORIA_DESCRIPCION"),
-                    row.get("CONTRATO_ID"),
+                    row.getInt("CONTRATO_ID"),
                     row.get("ESTADO_SOLICITUD_NOMBRE"),
                     row.get("SOLICITUD_FECHA_ASESORIA"),
                     row.get("SOLICITUD_RESOLUCION"),
@@ -128,6 +168,9 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
         cmbEstadoSolicitud = new javax.swing.JComboBox<EstadoSolicitudCombobox>();
         jButton2 = new javax.swing.JButton();
         lblEditaSolicitudAsesoria = new javax.swing.JLabel();
+        lblContratoIdAsesoria = new javax.swing.JLabel();
+        cmbProfesional = new javax.swing.JComboBox<ProfesionalCombobox>();
+        lblNombreProfesional = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,7 +182,7 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Solicitud ID", "Descripción", "Estado", "Fecha Solicitada", "Resolución", "Fecha Resoliución"
+                "Solicitud ID", "Descripción", "Estado", "Fecha Solicitada", "Resolución", "Contrato id"
             }
         ));
         jScrollPane1.setViewportView(jTableSolicitudAsesoria);
@@ -206,6 +249,10 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
 
         lblEditaSolicitudAsesoria.setText("jLabel6");
 
+        lblContratoIdAsesoria.setText("jLabel6");
+
+        lblNombreProfesional.setText("Profesional");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -222,21 +269,27 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1071, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(97, 97, 97)
+                                        .addGap(116, 116, 116)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel4)
-                                            .addComponent(jLabel5))
+                                            .addComponent(jLabel5)
+                                            .addComponent(lblNombreProfesional))
                                         .addGap(33, 33, 33)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(dtpFechaAsesoria, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                                            .addComponent(cmbEstadoSolicitud, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(cmbEstadoSolicitud, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(cmbProfesional, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addGap(17, 17, 17))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblEditaSolicitudAsesoria)
-                                .addGap(101, 101, 101)))))
+                                .addGap(101, 101, 101))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblContratoIdAsesoria)
+                                .addGap(460, 460, 460)))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -266,8 +319,14 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
                                 .addGap(38, 38, 38)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5)
-                                    .addComponent(cmbEstadoSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(cmbEstadoSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cmbProfesional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNombreProfesional)))))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblContratoIdAsesoria)
+                        .addGap(32, 32, 32)
                         .addComponent(dtpFechaAsesoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(149, 149, 149)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -311,6 +370,21 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
         SolicitudAsesoriaService asesoriaService =new SolicitudAsesoriaService();
         
         try {
+            
+            
+            if(asesoria.estadoSolicitudId == 2){
+                AsesoriaService as = new AsesoriaService();
+                Asesoria a  = new Asesoria();
+                
+                a.asesoriaDetalle = txtDescripcionResolucion.getText();
+                a.asesoriaFecha = startDateString;
+                a.contratoId = Integer.parseInt(lblContratoIdAsesoria.getText());
+                a.profesionalId =  cmbProfesional.getItemAt(cmbProfesional.getSelectedIndex()).profesional_id;
+                
+                
+                as.postAsesoria(a);
+                
+            }
             asesoriaService.putSolicitudAsesoria(asesoria, id);
             JOptionPane.showMessageDialog(null, "Solicitud Aprobada");
             
@@ -361,6 +435,7 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<EstadoSolicitudCombobox> cmbEstadoSolicitud;
+    private javax.swing.JComboBox<ProfesionalCombobox> cmbProfesional;
     private com.toedter.calendar.JDateChooser dtpFechaAsesoria;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -373,7 +448,9 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableSolicitudAsesoria;
+    private javax.swing.JLabel lblContratoIdAsesoria;
     private javax.swing.JLabel lblEditaSolicitudAsesoria;
+    private javax.swing.JLabel lblNombreProfesional;
     private javax.swing.JTextArea txtDescripcionResolucion;
     // End of variables declaration//GEN-END:variables
 }

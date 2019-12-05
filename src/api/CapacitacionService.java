@@ -53,24 +53,16 @@ public class CapacitacionService {
         try {
              URL url = new URL(urlAPi);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
-
-            System.out.println("Llego aca");
-            System.out.println(c.toString());
             JSONObject login = new JSONObject();
             login.put("capacitacionDetalle", c.capacitacionDetalle);
             login.put("capacitacionFecha", c.capacitacionFecha);
             login.put("contrato_Id", c.contrato_id);
             login.put("profesionalId", c.profesionalId);
-              conn.setDoOutput(true);
+            conn.setDoOutput(true);
             
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            
-            
-            
-            System.out.println(login);
             wr.writeBytes(login.toString());            
             wr.flush();
             wr.close();

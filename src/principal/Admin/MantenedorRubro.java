@@ -346,6 +346,11 @@ public class MantenedorRubro extends javax.swing.JFrame {
             activo = 1;
         }
         
+        if(nombreRubro.trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Nombre de Rubro no puede venir vacio");
+            return;
+        }
+        
         Rubro r = new Rubro();
         r.rubro_activo = activo;
         r.rubro_nombre  = nombreRubro;
@@ -373,6 +378,11 @@ public class MantenedorRubro extends javax.swing.JFrame {
        if(radioRubroActivoEdit.isSelected()){
            activo = 1;
        }
+       
+        if(nombreRubroEdit.trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Nombre de Rubro no puede venir vacio");
+            return;
+        }
        
        Rubro r = new Rubro();
        r.rubro_activo = activo;

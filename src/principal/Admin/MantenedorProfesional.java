@@ -374,6 +374,19 @@ public class MantenedorProfesional extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
+        
+         
+        if(txtNombreProfesionalInsert.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Nombre de Profesional no peude ser vacio");
+            return;
+        }else if(txtApellidoProfesionalInsert.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Apellido de Profesional no peude ser vacio");
+            return;
+        }else if(txtRutProfesionalInsert.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Rut de Profesional no peude ser vacio");
+            return;
+        }
+        
         Profesional p = new Profesional();
         
         p.profesional_nombre = txtNombreProfesionalInsert.getText();
@@ -406,6 +419,19 @@ public class MantenedorProfesional extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
+        
+         if(txtNombreProfesionalEdit.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Nombre de Profesional no peude ser vacio");
+            return;
+        }else if(txtApellidoProfesionalEdit.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Apellido de Profesional no peude ser vacio");
+            return;
+        }else if(txtRutProfesionalEdit.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Rut de Profesional no peude ser vacio");
+            return;
+        }
+         
+         
         Profesional p = new Profesional();
         
         p.profesional_nombre = txtNombreProfesionalEdit.getText();

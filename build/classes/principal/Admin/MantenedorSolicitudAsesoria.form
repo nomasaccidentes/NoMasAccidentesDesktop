@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -35,18 +35,19 @@
                                   <Component id="jScrollPane1" min="-2" pref="1071" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="jScrollPane2" min="-2" pref="527" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblNombreProfesional" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="dtpFechaAsesoria" pref="152" max="32767" attributes="0"/>
                                           <Component id="cmbEstadoSolicitud" max="32767" attributes="0"/>
+                                          <Component id="cmbProfesional" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="jLabel2" alignment="0" min="-2" pref="66" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                           </Group>
@@ -55,6 +56,12 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="lblEditaSolicitudAsesoria" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel2" min="-2" pref="66" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="lblContratoIdAsesoria" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="460" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -94,10 +101,17 @@
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="cmbEstadoSolicitud" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="cmbProfesional" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNombreProfesional" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
+                      <Component id="lblContratoIdAsesoria" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="dtpFechaAsesoria" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
                   </Group>
@@ -126,7 +140,7 @@
                 <Column editable="true" title="Estado" type="java.lang.Object"/>
                 <Column editable="true" title="Fecha Solicitada" type="java.lang.Object"/>
                 <Column editable="true" title="Resoluci&#xf3;n" type="java.lang.Object"/>
-                <Column editable="true" title="Fecha Resoliuci&#xf3;n" type="java.lang.Object"/>
+                <Column editable="true" title="Contrato id" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -284,6 +298,26 @@
     <Component class="javax.swing.JLabel" name="lblEditaSolicitudAsesoria">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel6"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblContratoIdAsesoria">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel6"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cmbProfesional">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;ProfesionalCombobox&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblNombreProfesional">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Profesional"/>
       </Properties>
     </Component>
   </SubComponents>

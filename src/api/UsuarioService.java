@@ -51,15 +51,9 @@ public class UsuarioService {
             wr.close();
 
             int responseCode = conn.getResponseCode();
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + login.toString());
-            System.out.println("Response Code : " + responseCode);
-
-            
             if(responseCode == 404){
                 return "404";
             }
-            
             
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(conn.getInputStream()));
