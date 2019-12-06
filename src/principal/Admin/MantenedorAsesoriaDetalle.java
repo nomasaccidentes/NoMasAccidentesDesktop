@@ -55,13 +55,12 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
     }
 
     public MantenedorAsesoriaDetalle(String id, String contratoId) {
-        System.out.println(id);
         
         
         idContrato = Integer.parseInt(contratoId);
         idAsesoria = Integer.parseInt(id);
         
-         AsesoriaDetalleService ads = new AsesoriaDetalleService();
+        AsesoriaDetalleService ads = new AsesoriaDetalleService();
         String array = ads.getAsesoriaDetalleById(idAsesoria);   
         JSONObject obj = new JSONObject(array);        
         Usuario u = new Usuario();
@@ -69,7 +68,7 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         
         
         System.out.println(data);
-          initComponents();
+        initComponents();
         this.numAsesoria.setText(id);
         if(data.length() != 0){
             botonAgregaDetalle.setVisible(false);

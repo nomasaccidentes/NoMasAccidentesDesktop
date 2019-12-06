@@ -107,7 +107,7 @@ public class MantenedorRubro extends javax.swing.JFrame {
 
         jLabel1.setText("Mantenedor RUbro");
 
-        jButton4.setText("Volver");
+        jButton4.setText("Cerrar Ventana");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -403,10 +403,8 @@ public class MantenedorRubro extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        
+
         this.setVisible(false);
-        DashboardAdmin admin = new DashboardAdmin();
-        admin.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

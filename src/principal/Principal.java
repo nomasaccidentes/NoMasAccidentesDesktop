@@ -56,6 +56,7 @@ public class Principal extends javax.swing.JFrame {
         txtUserLogin = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         txtPasswordLogin = new javax.swing.JPasswordField();
+        lblNombreUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
@@ -170,6 +171,9 @@ public class Principal extends javax.swing.JFrame {
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 510, 360));
 
+        lblNombreUsuario.setText("jLabel4");
+        getContentPane().add(lblNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 560, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
@@ -200,9 +204,10 @@ public class Principal extends javax.swing.JFrame {
                 }
                 
                 
+                lblNombreUsuario.setText(data.getString("usuario_username"));
                 if(rol_id == u.ADMIN ){
                     JOptionPane.showMessageDialog(null, "Bienvenido Admin");
-                    DashboardAdmin d = new DashboardAdmin();
+                    DashboardAdmin d = new DashboardAdmin(data.getString("usuario_username"));
                     d.setVisible(true);
                     this.setVisible(false);
                 }else if(rol_id == u.CLIENTE){
@@ -275,6 +280,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    public static javax.swing.JLabel lblNombreUsuario;
     private javax.swing.JPasswordField txtPasswordLogin;
     private javax.swing.JTextField txtUserLogin;
     // End of variables declaration//GEN-END:variables

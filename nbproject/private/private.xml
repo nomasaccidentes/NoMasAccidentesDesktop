@@ -7,23 +7,32 @@
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorCliente.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorProfesional.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/api/SolicitudAsesoriaService.java</file>
-            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorAsesoriaDetalle.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/models/Asesoria.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantendorRol.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantendorContrato.java</file>
-            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorSolicitudCapacitacion.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/api/RegistroAccidenteDetalleService.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/models/Capacitacion.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/api/ClienteService.java</file>
-            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorServicio.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/models/ProfesionalCombobox.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/models/RegistroAccidenteDetalle.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorRubro.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorRegistroAccidente.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/RegistroAccidenteDetalle.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorAsesoriaDetalle.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/DashboardAdmin.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorSolicitudCapacitacion.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorServicio.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/api/RegistroAccidenteService.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/api/CapacitacionService.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/api/ContratoService.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorAsesorias.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorInsertRegistroAcciente.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorSolicitudAsesoria.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/api/UsuarioService.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/principal/Admin/MantenedorUsuario.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/models/AsesoriaDetalle.java</file>
             <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/api/AsesoriaService.java</file>
+            <file>file:/C:/Users/AlexF/Documents/NetBeansProjects/NoMasAccidentesDesktop/src/models/RegistroAccidente.java</file>
         </group>
     </open-files>
 </project-private>

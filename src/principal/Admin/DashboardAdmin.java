@@ -11,11 +11,21 @@ package principal.Admin;
  */
 public class DashboardAdmin extends javax.swing.JFrame {
 
+    
+    String nombreUsuario;
     /**
      * Creates new form DashboardAdmin
      */
     public DashboardAdmin() {
         initComponents();
+    }
+
+    public DashboardAdmin(String string) {
+        initComponents();
+        
+        nombreUsuario = string;
+        
+        lblNombreUsuario.setText(nombreUsuario);
     }
 
     /**
@@ -32,7 +42,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
+        lblNombreUsuario = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         MantenedorRol = new javax.swing.JMenuItem();
@@ -48,6 +60,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem13 = new javax.swing.JMenuItem();
 
         jMenuItem8.setText("jMenuItem8");
 
@@ -59,9 +73,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         jMenuItem9.setText("jMenuItem9");
 
+        jMenuItem12.setText("jMenuItem12");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Dashboard Admin");
+
+        lblNombreUsuario.setText("jLabel2");
 
         jMenu1.setText("Mantenedores");
 
@@ -159,6 +177,18 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setText("Accidentes");
+
+        jMenuItem13.setText("Registro Accidentes");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem13);
+
+        jMenuBar1.add(jMenu6);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,16 +196,23 @@ public class DashboardAdmin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(325, 325, 325)
-                .addComponent(jLabel1)
-                .addContainerGap(608, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(463, 463, 463)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(lblNombreUsuario)))
+                .addContainerGap(470, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(205, 205, 205)
                 .addComponent(jLabel1)
-                .addContainerGap(508, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNombreUsuario)
+                .addContainerGap(379, Short.MAX_VALUE))
         );
 
         pack();
@@ -191,13 +228,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
         
         MantenedorRubro mantenedorRubro = new MantenedorRubro();
         mantenedorRubro.setVisible(true);
-        this.setVisible(false);
+//        this.setVisible(false);
     }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         
-        this.setVisible(false);
+//        this.setVisible(false);
         MantenedorCliente mc = new MantenedorCliente();
         mc.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -205,7 +242,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         
-        this.setVisible(false);
+//        this.setVisible(false);
         MantenedorProfesional mp = new MantenedorProfesional();
         mp.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -215,13 +252,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
         
         MantenedorUsuario mu =new MantenedorUsuario();
         mu.setVisible(true);
-        this.setVisible(false);
+//        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
         
-        this.setVisible(false);
+//        this.setVisible(false);
         MantenedorServicio  ms = new MantenedorServicio();
         ms.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
@@ -231,7 +268,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         
         MantendorContrato contrato = new MantendorContrato();
         contrato.setVisible(true);
-        this.setVisible(false);
+//        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -239,14 +276,14 @@ public class DashboardAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-        this.setVisible(false);
+//        this.setVisible(false);
         MantenedorSolicitudCapacitacion mc = new MantenedorSolicitudCapacitacion();
         mc.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
 
-        this.setVisible(false);
+//        this.setVisible(false);
         MantenedorSolicitudAsesoria ma = new MantenedorSolicitudAsesoria();
         ma.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
@@ -254,10 +291,19 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
         
-        this.setVisible(false);
+//        this.setVisible(false);
         MantenedorAsesorias asesorias = new MantenedorAsesorias();
         asesorias.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+        
+        MantenedorRegistroAccidente accidente =new MantenedorRegistroAccidente();
+//        this.setVisible(false);
+        accidente.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,11 +348,14 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -316,5 +365,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    public static javax.swing.JLabel lblNombreUsuario;
     // End of variables declaration//GEN-END:variables
 }

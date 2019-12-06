@@ -166,7 +166,7 @@ public class MantenedorCliente extends javax.swing.JFrame {
 
         jLabel1.setText("Mantendor Cliente");
 
-        jButton3.setText("Volver");
+        jButton3.setText("Cerrar Ventana");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -560,10 +560,8 @@ public class MantenedorCliente extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+
         this.setVisible(false);
-        DashboardAdmin admin = new DashboardAdmin();
-        admin.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

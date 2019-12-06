@@ -187,12 +187,13 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTableSolicitudAsesoria);
 
+        jPanel1.setBackground(new java.awt.Color(0, 102, 153));
         jPanel1.setForeground(new java.awt.Color(0, 102, 102));
         jPanel1.setToolTipText("");
 
         jLabel1.setText("Solicitud Asesorias");
 
-        jButton1.setText("Volver");
+        jButton1.setText("Cerrar Ventana");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -337,15 +338,6 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-        this.setVisible(false);
-        DashboardAdmin admin = new DashboardAdmin();
-        
-        admin.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void cmbEstadoSolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoSolicitudActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbEstadoSolicitudActionPerformed
@@ -397,6 +389,12 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
             Logger.getLogger(MantenedorSolicitudAsesoria.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

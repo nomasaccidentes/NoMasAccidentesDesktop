@@ -84,7 +84,7 @@ public class RegistroAccidenteDetalleService {
     }
     
      public String postRegistroAccidenteDetalle(RegistroAccidenteDetalle reg) throws Exception{
-        String urlAPi = URL + "registroAccidente/insertRegistroAccidente";
+        String urlAPi = URL + "registroAccidenteDetalle/insertRegistroAccidenteDetalle";
         try {
              URL url = new URL(urlAPi);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
