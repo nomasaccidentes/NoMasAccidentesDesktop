@@ -292,7 +292,7 @@
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="radioEstadoRolInactivo" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel2" min="-2" pref="77" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="txtEditNombreRol" min="-2" pref="183" max="-2" attributes="0"/>

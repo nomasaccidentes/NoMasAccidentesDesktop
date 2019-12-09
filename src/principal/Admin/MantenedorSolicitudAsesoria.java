@@ -10,6 +10,7 @@ import api.NoMasAccidentesService;
 import api.ProfesionalService;
 import api.RubroService;
 import api.SolicitudAsesoriaService;
+import api.TipoAsesoriaService;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,7 @@ import models.EstadoSolicitudCombobox;
 import models.ProfesionalCombobox;
 import models.Rubro;
 import models.SolicitudAsesoria;
+import models.TipoAsesoria;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -34,6 +36,7 @@ import org.json.JSONObject;
  */
 public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
 
+    String nombreTipoAsesoria;
     /**
      * Creates new form MantenedorSolicitudAsesoria
      */
@@ -63,7 +66,7 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
                 String p_id = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 0).toString();
                 String contrato_id = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 2).toString();
                 String sol_estado = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 3).toString();
-                
+                nombreTipoAsesoria = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 7).toString();
                 
                 lblContratoIdAsesoria.setText(contrato_id);
                 lblEditaSolicitudAsesoria.setText(p_id);
@@ -78,7 +81,7 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
                }
            });  
          
-           ProfesionalService ps = new ProfesionalService();
+            ProfesionalService ps = new ProfesionalService();
         
             JSONArray dataPro = ps.getProfesional();
 
@@ -102,11 +105,6 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
                     }
                 }
             });
-//          System.out.println(cmbEstadoSolicitudCapacitacion.getItemAt(cmbEstadoSolicitudCapacitacion.getSelectedIndex()).ESTADO_SOLICITUD_ID);
-          
-//          cmbEstadoSolicitudCapacitacion.getItemListeners(new ListSelectionEvent(ps, WIDTH, WIDTH, rootPaneCheckingEnabled))
-          
-    
     }
     
     
@@ -123,6 +121,7 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
         dtm.addColumn("Fecha Tentativa");
         dtm.addColumn("Resolución");
         dtm.addColumn("Resolución Fecha");
+        dtm.addColumn("Tipo Asesoria");
         
         for (int i = 0; i < array.length(); i++) {
                 JSONObject row = array.getJSONObject(i);
@@ -134,7 +133,8 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
                     row.get("ESTADO_SOLICITUD_NOMBRE"),
                     row.get("SOLICITUD_FECHA_ASESORIA"),
                     row.get("SOLICITUD_RESOLUCION"),
-                    row.get("SOLICITUD_RESOLUCION_FECHA")
+                    row.get("SOLICITUD_RESOLUCION_FECHA"),
+                    row.get("TIPO_ASESORIA_NOMBRE")
                 
                 });
                 
@@ -366,16 +366,31 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
             
             if(asesoria.estadoSolicitudId == 2){
                 AsesoriaService as = new AsesoriaService();
+                
+                
                 Asesoria a  = new Asesoria();
                 
                 a.asesoriaDetalle = txtDescripcionResolucion.getText();
                 a.asesoriaFecha = startDateString;
                 a.contratoId = Integer.parseInt(lblContratoIdAsesoria.getText());
                 a.profesionalId =  cmbProfesional.getItemAt(cmbProfesional.getSelectedIndex()).profesional_id;
+                TipoAsesoriaService tipoAsesoriaService =  new TipoAsesoriaService();
+                
+                TipoAsesoria  ta  = new TipoAsesoria();
+                ta.tipoAsesoriaNombre = nombreTipoAsesoria;
+                String datos = tipoAsesoriaService.getTipoAsesoriaByNombre(ta);
+                System.out.println(nombreTipoAsesoria);
+                System.out.println(datos);
+                JSONObject jsono = new JSONObject(datos);
+                a.tipoAsesoriaId = jsono.getJSONObject("data").getInt("TIPO_ASESORIA_ID");
                 
                 
-                as.postAsesoria(a);
-                
+                try {
+                    as.postAsesoria(a);    
+                    JOptionPane.showMessageDialog(null, "Asesoria Ingresada Correctamente");
+                } catch (Exception e) {
+                    Logger.getLogger(MantenedorSolicitudAsesoria.class.getName()).log(Level.SEVERE, null, e);
+                }
             }
             asesoriaService.putSolicitudAsesoria(asesoria, id);
             JOptionPane.showMessageDialog(null, "Solicitud Aprobada");

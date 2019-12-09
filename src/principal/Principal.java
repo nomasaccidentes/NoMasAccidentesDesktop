@@ -35,6 +35,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        lblNombreUsuario.setVisible(false);
     }
 
     /**
@@ -170,8 +171,6 @@ public class Principal extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 510, 360));
-
-        lblNombreUsuario.setText("jLabel4");
         getContentPane().add(lblNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 560, -1, -1));
 
         pack();

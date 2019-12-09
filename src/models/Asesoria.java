@@ -17,7 +17,11 @@ public class Asesoria {
     public String asesoriaFecha;
     public int contratoId;
     public int profesionalId;
-
+    public int tipoAsesoriaId;
+    
+    public String asesoriaComentarioResolucion;
+    public int asesoria_finalizada;
+    
     public int getAsesoriaId() {
         return asesoriaId;
     }
@@ -56,6 +60,30 @@ public class Asesoria {
 
     public void setProfesionalId(int profesionalId) {
         this.profesionalId = profesionalId;
+    }
+
+    public int getTipoAsesoriaId() {
+        return tipoAsesoriaId;
+    }
+
+    public void setTipoAsesoriaId(int tipoAsesoriaId) {
+        this.tipoAsesoriaId = tipoAsesoriaId;
+    }
+
+    public String getAsesoriaComentarioResolucion() {
+        return asesoriaComentarioResolucion;
+    }
+
+    public void setAsesoriaComentarioResolucion(String asesoriaComentarioResolucion) {
+        this.asesoriaComentarioResolucion = asesoriaComentarioResolucion;
+    }
+
+    public int getAsesoria_finalizada() {
+        return asesoria_finalizada;
+    }
+
+    public void setAsesoria_finalizada(int asesoria_finalizada) {
+        this.asesoria_finalizada = asesoria_finalizada;
     }
     
     

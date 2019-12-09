@@ -10,18 +10,9 @@ package models;
  * @author AlexF
  */
 public class AsesoriaDetalle {
-    public int asesoriaDetalleId;
     public String asesoriaDetalleTitulo;
     public int asesoriaDetalleCheck;
     public int asesoriaId;
-
-    public int getAsesoriaDetalleId() {
-        return asesoriaDetalleId;
-    }
-
-    public void setAsesoriaDetalleId(int asesoriaDetalleId) {
-        this.asesoriaDetalleId = asesoriaDetalleId;
-    }
 
     public String getAsesoriaDetalleTitulo() {
         return asesoriaDetalleTitulo;
@@ -49,7 +40,7 @@ public class AsesoriaDetalle {
 
     @Override
     public String toString() {
-        return "AsesoriaDetalle{" + "asesoriaDetalleId=" + asesoriaDetalleId + ", asesoriaDetalleTitulo=" + asesoriaDetalleTitulo + ", asesoriaDetalleCheck=" + asesoriaDetalleCheck + ", asesoriaId=" + asesoriaId + '}';
+        return "AsesoriaDetalle{"+"asesoriaDetalleTitulo=" + asesoriaDetalleTitulo + ", asesoriaDetalleCheck=" + asesoriaDetalleCheck + ", asesoriaId=" + asesoriaId + '}';
     }
 
 

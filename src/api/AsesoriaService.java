@@ -10,6 +10,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import models.ActividadMejora;
 import models.Asesoria;
 import models.Capacitacion;
 import org.json.JSONArray;
@@ -65,6 +66,7 @@ public class AsesoriaService {
             login.put("asesoria_fecha", a.asesoriaFecha);
             login.put("contrato_id", a.contratoId);
             login.put("profesional_id", a.profesionalId);
+            login.put("tipo_asesoria_id", a.tipoAsesoriaId);
             conn.setDoOutput(true);
             
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -95,4 +97,83 @@ public class AsesoriaService {
         }
          
     }
+     
+      public String finalizaAsesoria(Asesoria a, int id) throws Exception{
+        String urlAPi = URL + "asesorias/cierraAsesoria/"+id;
+        try {
+            URL url = new URL(urlAPi);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            
+            conn.setRequestMethod("PUT");
+            conn.setRequestProperty("Content-Type", "application/json");
+            JSONObject login = new JSONObject();
+            login.put("asesoria_comentario_resolucion", a.asesoriaComentarioResolucion);
+            login.put("asesoria_finalizada", a.asesoria_finalizada);
+            
+
+            conn.setDoOutput(true);
+            
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            
+            
+            wr.writeBytes(login.toString());            
+            wr.flush();
+            wr.close();
+
+            int responseCode = conn.getResponseCode();
+            if(responseCode == 404){
+                return "404";
+            }
+            
+            
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            JSONObject obj = new JSONObject(response);
+            return response.toString();
+        } catch (Exception e) {
+             throw e;
+        }
+         
+    }
+      
+       public String getAsesoriaById(int id){
+          String urlAPi = URL + "asesoria/getAsesoriaById/"+id;
+        try {
+            URL url = new URL(urlAPi);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            
+            if(conn.getResponseCode() != 200){
+                 throw new RuntimeException("Failed : HTTP Error code : " + conn.getResponseCode());
+            }
+            
+            
+                        BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            JSONObject obj = new JSONObject(response);
+
+            return response.toString();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        return null;
+    }
+     
+     
+    
 }

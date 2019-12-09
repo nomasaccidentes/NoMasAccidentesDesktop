@@ -41,13 +41,18 @@ public class MantenedorCliente extends javax.swing.JFrame {
         ArrayList arr = new ArrayList();
         for (int i = 0; i < array.length(); i++) {
                 JSONObject row = array.getJSONObject(i);
-                cmbRubroClienteEdit.addItem(
-                        new Rubro(row.getInt("RUBRO_ID"), row.getString("RUBRO_NOMBRE"), row.getInt("RUBRO_ACTIVO"))
-                );
                 
-                cmbSelectorRubroCliente.addItem(
-                 new Rubro(row.getInt("RUBRO_ID"), row.getString("RUBRO_NOMBRE"), row.getInt("RUBRO_ACTIVO"))
-                );
+                if(row.getInt("RUBRO_ACTIVO") != 0){
+                    cmbRubroClienteEdit.addItem(
+                        new Rubro(row.getInt("RUBRO_ID"), row.getString("RUBRO_NOMBRE"), row.getInt("RUBRO_ACTIVO"))
+                    );
+                }
+                
+                if(row.getInt("RUBRO_ACTIVO") != 0){
+                    cmbSelectorRubroCliente.addItem(
+                     new Rubro(row.getInt("RUBRO_ID"), row.getString("RUBRO_NOMBRE"), row.getInt("RUBRO_ACTIVO"))
+                    );
+                }
         }
         
         this.jTableClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener(){

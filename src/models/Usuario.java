@@ -14,8 +14,8 @@ package models;
 public class Usuario {
     
     public final int ADMIN = 1;
-    public final int CLIENTE = 3;
-    public final int PROFESIONAL = 2;
+    public final int CLIENTE = 2;
+    public final int PROFESIONAL = 3;
     
     
     

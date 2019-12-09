@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public class CapacitacionService {
     public static final String URL = "http://localhost:63382/api/";
     
-    public JSONArray getCapacitacion(){
+    public String getCapacitacion(){
         String urlAPi = URL + "capacitacion/getCapacitacion";
         try {
             URL url = new URL(urlAPi);
@@ -31,20 +31,24 @@ public class CapacitacionService {
             if(conn.getResponseCode() != 200){
                  throw new RuntimeException("Failed : HTTP Error code : " + conn.getResponseCode());
             }
-
-            InputStreamReader in = new InputStreamReader(conn.getInputStream());
-            BufferedReader br = new BufferedReader(in);
-            String output;  
             
-             JSONArray array = new JSONArray(br.readLine());
-             
-             
-             
-             return array;
+            
+                        BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            JSONObject obj = new JSONObject(response);
+
+            return response.toString();
+
         } catch (Exception e) {
             System.out.println(e);
         }
-        
         return null;
     }
     

@@ -41,8 +41,8 @@ public class MantenedorRubro extends javax.swing.JFrame {
                 }else if(rubroActivo.equalsIgnoreCase("0.0")){
                     radioRubroInactivoEdit.setSelected(true);
                 }
-                jLabel6.setText(rubroId);
-                jLabel6.setVisible(false);
+                lblIdRubroEdit.setText(rubroId);
+                lblIdRubroEdit.setVisible(false);
             }
         });      
         
@@ -98,7 +98,7 @@ public class MantenedorRubro extends javax.swing.JFrame {
         radioRubroActivoEdit = new javax.swing.JRadioButton();
         radioRubroInactivoEdit = new javax.swing.JRadioButton();
         jButton3 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        lblIdRubroEdit = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -225,8 +225,8 @@ public class MantenedorRubro extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("jLabel6");
-        jLabel6.setName("lblIdRubroEdit"); // NOI18N
+        lblIdRubroEdit.setText("jLabel6");
+        lblIdRubroEdit.setName("lblIdRubroEdit"); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -242,7 +242,7 @@ public class MantenedorRubro extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtNombreRubroEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel6))
+                        .addComponent(lblIdRubroEdit))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(radioRubroActivoEdit)
                         .addGap(31, 31, 31)
@@ -258,7 +258,7 @@ public class MantenedorRubro extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtNombreRubroEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(lblIdRubroEdit))
                 .addGap(57, 57, 57)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -269,8 +269,8 @@ public class MantenedorRubro extends javax.swing.JFrame {
                 .addGap(45, 45, 45))
         );
 
-        jLabel6.getAccessibleContext().setAccessibleName("lblIdRubroEdit");
-        jLabel6.getAccessibleContext().setAccessibleDescription("");
+        lblIdRubroEdit.getAccessibleContext().setAccessibleName("lblIdRubroEdit");
+        lblIdRubroEdit.getAccessibleContext().setAccessibleDescription("");
 
         jButton1.setText("Eliminar Rubro");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -326,7 +326,7 @@ public class MantenedorRubro extends javax.swing.JFrame {
       
         RubroService rs = new RubroService();
         
-        int idRubro = Integer.parseInt(jLabel6.getText());
+        int idRubro = Integer.parseInt(lblIdRubroEdit.getText());
         
         try {
             rs.deleteRubro(idRubro);
@@ -370,7 +370,7 @@ public class MantenedorRubro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       int rubroId = Integer.parseInt(jLabel6.getText());
+       int rubroId = Integer.parseInt(lblIdRubroEdit.getText());
        
        String nombreRubroEdit = txtNombreRubroEdit.getText();
        
@@ -454,12 +454,12 @@ public class MantenedorRubro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableRubro;
+    private javax.swing.JLabel lblIdRubroEdit;
     private javax.swing.JRadioButton radioRubroActivoEdit;
     private javax.swing.JRadioButton radioRubroActivoInsert;
     private javax.swing.JRadioButton radioRubroInactivoEdit;

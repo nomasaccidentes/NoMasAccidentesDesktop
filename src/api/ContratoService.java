@@ -10,6 +10,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import models.Cliente;
 import models.Contrato;
 import models.Profesional;
 import org.json.JSONArray;
@@ -100,7 +101,8 @@ public class ContratoService {
             login.put("cant_capacitacion", c.cant_capacitacion);
             login.put("cant_asesoria", c.cant_asesoria);
             login.put("contrato_activo", c.contrato_activo);
-            login.put("cliente_id", c.cliente_id);            
+            login.put("cliente_id", c.cliente_id);  
+            login.put("num_trabajadores", c.num_trabajadores);  
             
             conn.setDoOutput(true);
             
@@ -202,6 +204,51 @@ public class ContratoService {
                 return "404";
             }
             
+            
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            JSONObject obj = new JSONObject(response);
+            return response.toString();
+        } catch (Exception e) {
+             throw e;
+        }
+         
+    }
+      
+      
+      
+       public String desactivaContrato(int contratoId, Contrato c) throws Exception{
+        String urlAPi = URL + "contrato/desactivaContrato/"+contratoId;
+        try {
+            URL url = new URL(urlAPi);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            
+            conn.setRequestMethod("PUT");
+            conn.setRequestProperty("Content-Type", "application/json");
+            JSONObject login = new JSONObject();
+            login.put("contrato_activo", c.contrato_activo);
+            login.put("cliente_id", c.cliente_id);
+
+            conn.setDoOutput(true);
+            
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            
+            
+            wr.writeBytes(login.toString());            
+            wr.flush();
+            wr.close();
+
+            int responseCode = conn.getResponseCode();
+            if(responseCode == 404){
+                return "404";
+            }
             
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(conn.getInputStream()));

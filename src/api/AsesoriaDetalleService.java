@@ -94,7 +94,7 @@ public class AsesoriaDetalleService {
          
     }
      
-       public String getAsesoriaDetalleById(int id){
+       public String getAsesoriaDetalleById(String id){
           String urlAPi = URL + "asesoriaDetalle/getAsesoriaDetallebyId/"+id;
         try {
             URL url = new URL(urlAPi);

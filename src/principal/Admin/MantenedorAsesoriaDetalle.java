@@ -5,12 +5,18 @@
  */
 package principal.Admin;
 
+import api.ActividadMejoraService;
 import api.AsesoriaDetalleService;
+import api.AsesoriaService;
+import api.TipoAsesoriaService;
 import com.google.gson.JsonObject;
 import java.awt.Button;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Panel;
+import java.awt.ScrollPane;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.ScrollBar;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,7 +34,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.tree.DefaultTreeCellEditor;
+import models.ActividadMejora;
+import models.Asesoria;
 import models.AsesoriaDetalle;
+import models.TipoAsesoria;
 import models.Usuario;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,31 +53,54 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
     
     int idElemento = 0;
     public JLabel label;
-    int idAsesoria;
-    int idContrato;
+    String idAsesoria;
+    String idContrato;
     private HashMap componentMap;
+    String tipoAsesoriaDetalle;
+
+    @Override
+    public void setExtendedState(int i) {
+        super.setExtendedState(i); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     /**
      * Creates new form MantenedorAsesoriaDetalle
      */
     public MantenedorAsesoriaDetalle() {
         initComponents();
-        
     }
 
-    public MantenedorAsesoriaDetalle(String id, String contratoId) {
+    public MantenedorAsesoriaDetalle(String id, String contratoId, String tipoAsesoria) throws Exception {
+        idContrato = (contratoId);
+        idAsesoria = (id);    
+        tipoAsesoriaDetalle = tipoAsesoria;
         
         
-        idContrato = Integer.parseInt(contratoId);
-        idAsesoria = Integer.parseInt(id);
         
+        
+       
+      
         AsesoriaDetalleService ads = new AsesoriaDetalleService();
         String array = ads.getAsesoriaDetalleById(idAsesoria);   
+        
+        AsesoriaService as = new AsesoriaService();
+        
+        String asesoria = as.getAsesoriaById(Integer.parseInt(idAsesoria));
+        
+        JSONObject jo = new JSONObject(asesoria);
+        System.out.println(jo.getJSONObject("data"));
+        int asesoriaFinalizada = jo.getJSONObject("data").getInt("ASESORIA_FINALIZADA");
+        TipoAsesoriaService asesoriaService = new TipoAsesoriaService();
+        TipoAsesoria ta  = new TipoAsesoria();
+        ta.tipoAsesoriaNombre = tipoAsesoriaDetalle;
+        String tipoAsesoriaStringService = asesoriaService.getTipoAsesoriaByNombre(ta);
+        JSONObject objTipoAsesoria = new JSONObject(tipoAsesoriaStringService);        
+       
+        int tipoAsesoriaId = objTipoAsesoria.getJSONObject("data").getInt("TIPO_ASESORIA_ID");      
+        
         JSONObject obj = new JSONObject(array);        
         Usuario u = new Usuario();
         JSONArray data = obj.getJSONArray("data");   
-        
-        
-        System.out.println(data);
         initComponents();
         this.numAsesoria.setText(id);
         if(data.length() != 0){
@@ -75,11 +108,12 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
             btnCierraDetalle.setVisible(false);
             for (int i = 0; i < data.length(); i++) {
                     JSONObject row = data.getJSONObject(i);
+                    System.out.println(row);
                     JTextField textField = new JTextField();
                     JCheckBox check = new JCheckBox();
                     textField.setVisible(true);
                     textField.setText(row.getString("ASESORIA_DETALLE_TITULO"));
-                    textField.setBounds(10, posicion, 600, 50);
+                    textField.setBounds(10, posicion, 500, 50);
                     check.setVisible(true);
                     textField.setEditable(false);
                     if(row.getInt("ASESORIA_DETALLE_CHECK") == 1){
@@ -87,27 +121,39 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
                     }else{
                         check.setSelected(false);
                     }
-                    check.setBounds(640, posicion, 500, 50);
+                    check.setBounds(540, posicion, 500, 50);
                     
                     panelAlmacenaDetalle.add(textField);
                     panelAlmacenaDetalle.add(check);
                     panelAlmacenaDetalle.repaint();
                     panelAlmacenaDetalle.revalidate();
-                   
-                    JScrollPane scroll = new JScrollPane(
-                            new Panel(), 
-                            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, 
-                            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
-                    );
-                    panelAlmacenaDetalle.add(scroll);
+                    
+                    
                     idElemento +=1;
                     posicion += 50;
             }
         }else{
             this.botonAgregaDetalle.setVisible(true);
             this.btnCierraDetalle.setVisible(true);
+            this.panelFinalizaAsesoria.setVisible(true);
         }
         
+        
+        
+        if(asesoriaFinalizada == 1){
+            btnAgregarActividadMejora.setVisible(false);
+            btnFinalizaAseasoria.setVisible(false);
+            botonAgregaDetalle.setVisible(false);
+            btnCierraDetalle.setVisible(false);
+            btnReportarAccidente.setVisible(false);
+            String comentario = jo.getJSONObject("data").getString("ASESORIA_COMENTARIO_RESOLUCION");
+            txaComentarioCierre.setText(comentario);
+        }
+        
+         if(tipoAsesoriaId != 2){
+            btnReportarAccidente.setVisible(false);
+            System.out.println("No tiene accidente");
+        }
          
       
     }
@@ -121,26 +167,32 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         panelAlmacenaDetalle = new javax.swing.JPanel();
-        botonAgregaDetalle = new javax.swing.JButton();
         btnCierraDetalle = new javax.swing.JButton();
+        botonAgregaDetalle = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         numAsesoria = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAgregarActividadMejora = new javax.swing.JButton();
+        btnReportarAccidente = new javax.swing.JButton();
+        panelFinalizaAsesoria = new javax.swing.JPanel();
+        btnFinalizaAseasoria = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txaComentarioCierre = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1300, 800));
 
-        javax.swing.GroupLayout panelAlmacenaDetalleLayout = new javax.swing.GroupLayout(panelAlmacenaDetalle);
-        panelAlmacenaDetalle.setLayout(panelAlmacenaDetalleLayout);
-        panelAlmacenaDetalleLayout.setHorizontalGroup(
-            panelAlmacenaDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 912, Short.MAX_VALUE)
-        );
-        panelAlmacenaDetalleLayout.setVerticalGroup(
-            panelAlmacenaDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
-        );
+        panelAlmacenaDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle Asesoria"));
+
+        btnCierraDetalle.setText("Agregar Detalle");
+        btnCierraDetalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCierraDetalleActionPerformed(evt);
+            }
+        });
 
         botonAgregaDetalle.setText("+");
         botonAgregaDetalle.addActionListener(new java.awt.event.ActionListener() {
@@ -149,12 +201,26 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
             }
         });
 
-        btnCierraDetalle.setText("Agregar Detalle");
-        btnCierraDetalle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCierraDetalleActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout panelAlmacenaDetalleLayout = new javax.swing.GroupLayout(panelAlmacenaDetalle);
+        panelAlmacenaDetalle.setLayout(panelAlmacenaDetalleLayout);
+        panelAlmacenaDetalleLayout.setHorizontalGroup(
+            panelAlmacenaDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAlmacenaDetalleLayout.createSequentialGroup()
+                .addContainerGap(631, Short.MAX_VALUE)
+                .addGroup(panelAlmacenaDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCierraDetalle, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botonAgregaDetalle, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+        panelAlmacenaDetalleLayout.setVerticalGroup(
+            panelAlmacenaDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlmacenaDetalleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(botonAgregaDetalle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 390, Short.MAX_VALUE)
+                .addComponent(btnCierraDetalle)
+                .addGap(30, 30, 30))
+        );
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Detalle Asesoria Id:");
@@ -168,55 +234,113 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Reportar Accidente");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarActividadMejora.setText("Agregar Actividades de Mejora");
+        btnAgregarActividadMejora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAgregarActividadMejoraActionPerformed(evt);
             }
         });
+
+        btnReportarAccidente.setText("Reportar Accidente");
+        btnReportarAccidente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportarAccidenteActionPerformed(evt);
+            }
+        });
+
+        panelFinalizaAsesoria.setBorder(javax.swing.BorderFactory.createTitledBorder("Finalizar Asesoria"));
+
+        btnFinalizaAseasoria.setText("Agregar Comentario Y Finalizar Asesoria");
+        btnFinalizaAseasoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizaAseasoriaActionPerformed(evt);
+            }
+        });
+
+        txaComentarioCierre.setColumns(20);
+        txaComentarioCierre.setRows(5);
+        jScrollPane1.setViewportView(txaComentarioCierre);
+
+        jLabel2.setText("Comentario");
+
+        javax.swing.GroupLayout panelFinalizaAsesoriaLayout = new javax.swing.GroupLayout(panelFinalizaAsesoria);
+        panelFinalizaAsesoria.setLayout(panelFinalizaAsesoriaLayout);
+        panelFinalizaAsesoriaLayout.setHorizontalGroup(
+            panelFinalizaAsesoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFinalizaAsesoriaLayout.createSequentialGroup()
+                .addContainerGap(66, Short.MAX_VALUE)
+                .addComponent(btnFinalizaAseasoria)
+                .addGap(61, 61, 61))
+            .addGroup(panelFinalizaAsesoriaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelFinalizaAsesoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(panelFinalizaAsesoriaLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelFinalizaAsesoriaLayout.setVerticalGroup(
+            panelFinalizaAsesoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFinalizaAsesoriaLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnFinalizaAseasoria)
+                .addGap(49, 49, 49))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addComponent(panelAlmacenaDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botonAgregaDetalle)
-                .addGap(24, 24, 24))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(377, 377, 377)
-                .addComponent(jLabel1)
-                .addGap(26, 26, 26)
-                .addComponent(numAsesoria)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(97, 97, 97))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(202, 202, 202)
-                .addComponent(btnCierraDetalle)
-                .addGap(245, 245, 245)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(377, 377, 377)
+                        .addComponent(jLabel1)
+                        .addGap(26, 26, 26)
+                        .addComponent(numAsesoria)
+                        .addGap(371, 371, 371)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(panelAlmacenaDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(80, 80, 80)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAgregarActividadMejora)
+                                    .addComponent(btnReportarAccidente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(panelFinalizaAsesoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(numAsesoria)
-                    .addComponent(jButton1))
-                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonAgregaDetalle)
-                    .addComponent(panelAlmacenaDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCierraDetalle)
-                    .addComponent(jButton2))
-                .addContainerGap(41, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(numAsesoria))
+                    .addComponent(jButton1))
+                .addGap(74, 74, 74)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAgregarActividadMejora)
+                        .addGap(74, 74, 74)
+                        .addComponent(btnReportarAccidente)
+                        .addGap(46, 46, 46)
+                        .addComponent(panelFinalizaAsesoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelAlmacenaDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -230,10 +354,10 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         JCheckBox check = new JCheckBox();
         textField.setVisible(true);
         textField.setName("tituloCheck"+idElemento);
-        textField.setBounds(10, posicion, 600, 50);
+        textField.setBounds(10, posicion, 500, 50);
         check.setVisible(true);
         check.setName("check"+idElemento);
-        check.setBounds(620, posicion, 500, 50);
+        check.setBounds(520, posicion, 500, 50);
          JScrollPane scroll = new JScrollPane(
                             ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, 
                             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
@@ -243,17 +367,14 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         panelAlmacenaDetalle.add(check);
         panelAlmacenaDetalle.repaint();
         panelAlmacenaDetalle.revalidate();
+   
         idElemento +=1;
         posicion += 50;
         
     }//GEN-LAST:event_botonAgregaDetalleActionPerformed
 
     private void btnCierraDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCierraDetalleActionPerformed
-        // TODO add your handling code here:
-        
-        
-        System.out.println(this.idElemento);
-       
+
         AsesoriaDetalleService ads = new AsesoriaDetalleService();
         
         int totalComponentes = panelAlmacenaDetalle.getComponentCount();
@@ -261,18 +382,14 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         String titulo = "";
         int isChecked = 0;
          int finaliado = 0;
-       
-//        System.out.println(arrListo.toString());
+         String nombre = "";
+      
         
-        
-        
-        for (int i = 0; i < panelAlmacenaDetalle.getComponentCount()/2; i++) {
+        for (int i = 0; i < idElemento; i++) {
             AsesoriaDetalle as = new AsesoriaDetalle();
-            
-            System.out.println();
           
-            String nombre = (( JTextField) findComponentByName(panelAlmacenaDetalle, "tituloCheck"+i)).getText();
-            
+            nombre = (( JTextField) findComponentByName(panelAlmacenaDetalle, "tituloCheck"+i)).getText();
+//             System.out.println(nombre);
             as.asesoriaDetalleTitulo = nombre;
             
             if((( JCheckBox) findComponentByName(panelAlmacenaDetalle, "check"+i)).isSelected()){
@@ -281,10 +398,7 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
                 isChecked = 0;
             }
             as.asesoriaDetalleCheck = isChecked;
-           
-            
-             as.asesoriaId = idAsesoria;
-        
+            as.asesoriaId = Integer.parseInt(idAsesoria);
             try {
                ads.postAsesoriaDetalle(as);
                finaliado = 1;
@@ -294,7 +408,18 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         }
         
         if(finaliado == 1){
-            JOptionPane.showMessageDialog(null, "Detalle Asesoria INsertado");
+            
+            MantenedorAsesoriaDetalle asesoriaDetalle;
+            try {
+                asesoriaDetalle = new MantenedorAsesoriaDetalle(idAsesoria, idContrato, tipoAsesoriaDetalle);
+                asesoriaDetalle.setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(MantenedorAsesoriaDetalle.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setVisible(false);
+            
+            
+            JOptionPane.showMessageDialog(null, "Detalle Asesoria Insertado");
         }
         
     }//GEN-LAST:event_btnCierraDetalleActionPerformed
@@ -304,12 +429,43 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnReportarAccidenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportarAccidenteActionPerformed
         // TODO add your handling code here:
         
-        MantenedorInsertRegistroAcciente acciente = new MantenedorInsertRegistroAcciente(idAsesoria, idContrato);
+        MantenedorInsertRegistroAcciente acciente = new MantenedorInsertRegistroAcciente(Integer.parseInt(idAsesoria), Integer.parseInt(idContrato));
         acciente.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnReportarAccidenteActionPerformed
+
+    private void btnAgregarActividadMejoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActividadMejoraActionPerformed
+
+        MantenedorActividadesMejora actividadesMejora = new MantenedorActividadesMejora(idAsesoria);
+        actividadesMejora.setVisible(true);
+    }//GEN-LAST:event_btnAgregarActividadMejoraActionPerformed
+
+    private void btnFinalizaAseasoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizaAseasoriaActionPerformed
+        // TODO add your handling code here:
+        
+        Asesoria a  = new Asesoria();
+        a.asesoriaComentarioResolucion = txaComentarioCierre.getText();
+        a.asesoria_finalizada = 1;
+        
+        AsesoriaService as = new AsesoriaService();
+        
+        try {
+            as.finalizaAsesoria(a, Integer.parseInt(idAsesoria));
+            JOptionPane.showMessageDialog(null, "Asesoria Finalizada");
+            MantenedorAsesoriaDetalle asesoriaDetalle;
+            try {
+                asesoriaDetalle = new MantenedorAsesoriaDetalle(idAsesoria, idContrato, tipoAsesoriaDetalle);
+                asesoriaDetalle.setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(MantenedorAsesoriaDetalle.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setVisible(false);
+        } catch (Exception ex) {
+            Logger.getLogger(MantenedorAsesoriaDetalle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnFinalizaAseasoriaActionPerformed
 
     
     public Component findComponentByName(Container container, String componentName) {
@@ -367,21 +523,25 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                
-               
                 new MantenedorAsesoriaDetalle().setVisible(true);
-                 System.out.println("llego primero");
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregaDetalle;
+    private javax.swing.JButton btnAgregarActividadMejora;
     private javax.swing.JButton btnCierraDetalle;
+    private javax.swing.JButton btnFinalizaAseasoria;
+    public static javax.swing.JButton btnReportarAccidente;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel numAsesoria;
     private javax.swing.JPanel panelAlmacenaDetalle;
+    private javax.swing.JPanel panelFinalizaAsesoria;
+    private javax.swing.JTextArea txaComentarioCierre;
     // End of variables declaration//GEN-END:variables
 }

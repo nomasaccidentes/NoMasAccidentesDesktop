@@ -7,6 +7,8 @@ package principal.Admin;
 
 import api.AsesoriaService;
 import api.ClienteService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +23,7 @@ import org.json.JSONObject;
 public class MantenedorAsesorias extends javax.swing.JFrame {
 
     String contratoid;
+    String tipoAsesoria;
     /**
      * Creates new form MantenedorAsesorias
      */
@@ -33,7 +36,8 @@ public class MantenedorAsesorias extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent event) {
                 String clienteId = tblListaAsesorias.getValueAt(tblListaAsesorias.getSelectedRow(), 0).toString();
                 contratoid = tblListaAsesorias.getValueAt(tblListaAsesorias.getSelectedRow(), 3).toString();
-              
+                tipoAsesoria = tblListaAsesorias.getValueAt(tblListaAsesorias.getSelectedRow(), 5).toString();
+                
                 lblContratoId.setText(clienteId);
             }
         });      
@@ -48,6 +52,9 @@ public class MantenedorAsesorias extends javax.swing.JFrame {
         dtm.addColumn("Fecha");
         dtm.addColumn("Contrato Id");
         dtm.addColumn("Profesional");
+        dtm.addColumn("Tipo Asesoria");
+        dtm.addColumn("Asesoria Finalizada");
+        dtm.addColumn("Comentario Final");
         
         String array = as.getAsesoria();        
         JSONObject obj = new JSONObject(array);        
@@ -55,7 +62,21 @@ public class MantenedorAsesorias extends javax.swing.JFrame {
         JSONArray data = obj.getJSONArray("data");               
         for (int i = 0; i < data.length(); i++) {
                 JSONObject row = data.getJSONObject(i);
-                dtm.addRow(new Object[]{row.getInt("ASESORIA_ID"),row.getString("ASESORIA_DETALLE"), row.get("ASESORIA_FECHA"), row.getInt("CONTRATO_ID"), row.getString("PROFESIONAL_NOMBRE")});
+                String Mensaje = "";
+                if(row.getInt("ASESORIA_FINALIZADA") == 1){
+                     Mensaje = "Finalizada";
+                }else{
+                    Mensaje = "Pendiente";
+                }
+                dtm.addRow(new Object[]{
+                    row.getInt("ASESORIA_ID"),
+                    row.getString("ASESORIA_DETALLE"),
+                    row.get("ASESORIA_FECHA"),
+                    row.getInt("CONTRATO_ID"),
+                    row.getString("PROFESIONAL_NOMBRE"),
+                    row.get("TIPO_ASESORIA"), 
+                    Mensaje, 
+                    row.get("ASESORIA_COMENTARIO_RESOLUCION")});
         }
         
         return dtm;
@@ -176,10 +197,16 @@ public class MantenedorAsesorias extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-        MantenedorAsesoriaDetalle asesoriaDetalle =  new MantenedorAsesoriaDetalle(lblContratoId.getText(), contratoid);
+        MantenedorAsesoriaDetalle asesoriaDetalle;
+        try {
+            asesoriaDetalle = new MantenedorAsesoriaDetalle(lblContratoId.getText(), contratoid, tipoAsesoria);
+            asesoriaDetalle.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(MantenedorAsesorias.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
-        asesoriaDetalle.setVisible(true);
+   
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

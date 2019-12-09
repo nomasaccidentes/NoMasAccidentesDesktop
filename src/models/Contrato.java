@@ -19,6 +19,7 @@ public class Contrato {
     public int cant_asesoria;
     public int contrato_activo;
     public int cliente_id;
+    public int num_trabajadores;
 
 
     public String getContrato_descripcion() {
@@ -77,6 +78,16 @@ public class Contrato {
         this.cliente_id = cliente_id;
     }
 
+    public int getNum_trabajadores() {
+        return num_trabajadores;
+    }
+
+    public void setNum_trabajadores(int num_trabajadores) {
+        this.num_trabajadores = num_trabajadores;
+    }
+
+    
+    
     @Override
     public String toString() {
         return "Contrato{" + ", contrato_descripcion=" + contrato_descripcion + ", contrato_fecha_inicio=" + contrato_fecha_inicio + ", contrato_fecha_fin=" + contrato_fecha_fin + ", cant_capacitacion=" + cant_capacitacion + ", cant_asesoria=" + cant_asesoria + ", contrato_activo=" + contrato_activo + ", cliente_id=" + cliente_id + '}';
