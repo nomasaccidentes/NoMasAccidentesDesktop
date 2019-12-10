@@ -15,6 +15,9 @@ public class PagoContrato {
     public String pagoContratoDescripcion;
     public String pagoContratoVcto;
     public int clienteId;
+    public String pagoFechaReal;
+    public int contrato;
+    public int pagoContratoEstadoId;
 
     public PagoContrato() {
     }
@@ -44,11 +47,38 @@ public class PagoContrato {
         this.clienteId = clienteId;
     }
 
+    public String getPagoFechaReal() {
+        return pagoFechaReal;
+    }
+
+    public void setPagoFechaReal(String pagoFechaReal) {
+        this.pagoFechaReal = pagoFechaReal;
+    }
+
+    public int getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(int contrato) {
+        this.contrato = contrato;
+    }
+
+    public int getPagoContratoEstadoId() {
+        return pagoContratoEstadoId;
+    }
+
+    public void setPagoContratoEstadoId(int pagoContratoEstadoId) {
+        this.pagoContratoEstadoId = pagoContratoEstadoId;
+    }
+
     @Override
     public String toString() {
-        return "PagoContrato{" + ", pagoContratoDescripcion=" + pagoContratoDescripcion + ", pagoContratoVcto=" + pagoContratoVcto + ", clienteId=" + clienteId + '}';
+        return "PagoContrato{" + "pagoContratoDescripcion=" + pagoContratoDescripcion + ", pagoContratoVcto=" + pagoContratoVcto + ", clienteId=" + clienteId + ", pagoFechaReal=" + pagoFechaReal + ", contrato=" + contrato + ", pagoContratoEstadoId=" + pagoContratoEstadoId + '}';
     }
     
+    
+
+   
     
     
     

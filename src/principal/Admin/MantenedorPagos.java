@@ -5,6 +5,14 @@
  */
 package principal.Admin;
 
+import api.ContratoService;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import models.Usuario;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  *
  * @author AlexF
@@ -14,10 +22,47 @@ public class MantenedorPagos extends javax.swing.JFrame {
     /**
      * Creates new form MantenedorPagos
      */
+    
+    
+    String contratoId;
     public MantenedorPagos() {
         initComponents();
+        
+        this.JtablePagosContrato.setModel(this.showData());
+        
+         this.JtablePagosContrato.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+               public void valueChanged(ListSelectionEvent event) {
+                   // do some actions here, for example
+                   // print first column value from selected row
+                   contratoId = JtablePagosContrato.getValueAt(JtablePagosContrato.getSelectedRow(), 0).toString();   
+                   
+               }
+           });      
     }
 
+    
+    public DefaultTableModel showData(){
+         ContratoService  contratoService = new ContratoService();
+        DefaultTableModel dtm = new DefaultTableModel();
+        
+        dtm.addColumn("Id");
+        dtm.addColumn("Descripcion");
+        dtm.addColumn("Fecha Inicio");
+        dtm.addColumn("Fecha Fin");     
+        dtm.addColumn("Estado Contrato");
+        
+        String array = contratoService.getContrato();        
+        JSONObject obj = new JSONObject(array);        
+        Usuario u = new Usuario();
+        JSONArray data = obj.getJSONArray("data");               
+        for (int i = 0; i < data.length(); i++) {
+                JSONObject row = data.getJSONObject(i);
+                dtm.addRow(new Object[]{row.getInt("CONTRATO_ID"),row.get("CONTRATO_DESCRIPCION"), row.get("CONTRATO_FECHA_INICIO"), row.get("CONTRATO_FECHA_FIN"), row.getInt("CONTRATO_ACTIVO")});
+        }
+        
+        return dtm;
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,6 +72,12 @@ public class MantenedorPagos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        JtablePagosContrato = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -34,15 +85,76 @@ public class MantenedorPagos extends javax.swing.JFrame {
             }
         });
 
+        JtablePagosContrato.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(JtablePagosContrato);
+
+        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+
+        jLabel1.setText("Pagos Por Contrato");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(459, 459, 459)
+                .addComponent(jLabel1)
+                .addContainerGap(622, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(25, 25, 25))
+        );
+
+        jButton1.setText("Ver Pagos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1179, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(563, 563, 563)
+                                .addComponent(jButton1)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 749, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100)
+                .addComponent(jButton1)
+                .addContainerGap(154, Short.MAX_VALUE))
         );
 
         pack();
@@ -51,6 +163,13 @@ public class MantenedorPagos extends javax.swing.JFrame {
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
     }//GEN-LAST:event_formComponentResized
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        MantenedorVerPagos mantenedorVerPagos = new  MantenedorVerPagos(contratoId);
+        mantenedorVerPagos.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -88,5 +207,10 @@ public class MantenedorPagos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable JtablePagosContrato;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
