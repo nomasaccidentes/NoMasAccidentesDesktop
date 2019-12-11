@@ -50,7 +50,7 @@ public class MantenedorCapacitacionDetalle extends javax.swing.JFrame {
         for (int i = 0; i < array.length(); i++) {
                 JSONObject row = array.getJSONObject(i);
                 String asiste;
-                if(row.getInt("CAPACITACION_ASISTE") == 0){
+                if(row.getInt("CAPACITACION_ASISTE") == 1){
                     asiste = "Presente";
                 }else{
                     asiste = "Ausente";

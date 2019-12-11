@@ -126,4 +126,35 @@ public class RegistroAccidenteService {
         }
          
     }
+     
+     public String getRegistrosAccidentesByAsesoria(int asesoria){
+          String urlAPi = URL + "registroAccidente/registroAccidenteByAsesoria/"+asesoria;
+        try {
+            URL url = new URL(urlAPi);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            
+            if(conn.getResponseCode() != 200){
+                 throw new RuntimeException("Failed : HTTP Error code : " + conn.getResponseCode());
+            }
+            
+            
+                        BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            JSONObject obj = new JSONObject(response);
+
+            return response.toString();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        return null;
+    }
 }

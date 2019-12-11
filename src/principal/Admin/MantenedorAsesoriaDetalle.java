@@ -10,6 +10,11 @@ import api.AsesoriaDetalleService;
 import api.AsesoriaService;
 import api.TipoAsesoriaService;
 import com.google.gson.JsonObject;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.html.simpleparser.HTMLWorker;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Button;
 import java.awt.Component;
 import java.awt.Container;
@@ -18,12 +23,26 @@ import java.awt.Panel;
 import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.ScrollBar;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,6 +60,7 @@ import models.TipoAsesoria;
 import models.Usuario;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 
 /**
  *
@@ -375,6 +395,8 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
 
     private void btnCierraDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCierraDetalleActionPerformed
 
+        
+        
         AsesoriaDetalleService ads = new AsesoriaDetalleService();
         
         int totalComponentes = panelAlmacenaDetalle.getComponentCount();
@@ -383,20 +405,24 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         int isChecked = 0;
          int finaliado = 0;
          String nombre = "";
-      
-        
+       
+         String aprobado = "";
+        String textoDetallePdf = "Asesoria N° "+idAsesoria+"\n ";
         for (int i = 0; i < idElemento; i++) {
             AsesoriaDetalle as = new AsesoriaDetalle();
           
             nombre = (( JTextField) findComponentByName(panelAlmacenaDetalle, "tituloCheck"+i)).getText();
 //             System.out.println(nombre);
             as.asesoriaDetalleTitulo = nombre;
-            
+            textoDetallePdf += "- " + nombre + " ";
             if((( JCheckBox) findComponentByName(panelAlmacenaDetalle, "check"+i)).isSelected()){
                 isChecked = 1;
+                aprobado = "Aprobado";
             }else{
                 isChecked = 0;
+                aprobado = "No Aprobado";
             }
+            textoDetallePdf += "- " + aprobado + " \n";
             as.asesoriaDetalleCheck = isChecked;
             as.asesoriaId = Integer.parseInt(idAsesoria);
             try {
@@ -411,6 +437,10 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
             
             MantenedorAsesoriaDetalle asesoriaDetalle;
             try {
+                
+             
+                
+              
                 asesoriaDetalle = new MantenedorAsesoriaDetalle(idAsesoria, idContrato, tipoAsesoriaDetalle);
                 asesoriaDetalle.setVisible(true);
             } catch (Exception ex) {
@@ -424,6 +454,126 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCierraDetalleActionPerformed
 
+    
+    
+    public void generarPdfByAsesoriaId(String asesoriaId) throws FileNotFoundException, DocumentException, IOException, MessagingException{
+        
+        
+        AsesoriaService as = new AsesoriaService();
+        String asesoria = as.getAsesoriaById(Integer.parseInt(idAsesoria));
+        String nombrePdf = "Asesoria-"+idContrato+"-"+idAsesoria+"";
+        String textoDetallePdf = "lalalalala";
+        String ruta = "/Users/AlexF/Documents/pdfprueba/"+  nombrePdf +".pdf";
+        FileOutputStream archivo = new FileOutputStream(ruta);
+        Document doc = new Document();
+        PdfWriter.getInstance(doc, archivo);
+        doc.open();
+        doc.addTitle("Detalle Asesoria N°"+ idAsesoria);
+        doc.addCreationDate();
+        
+        JSONObject obj = new JSONObject(asesoria);         
+        String str = "<html><head></head><body> ";
+        String tablaPincipal = " <p style='text-align:center'> Asesoria </p> <table border='1'>  <tr><td>Asesoria Detalle</td><td>Fecha</td> <td>Profesional</td></tr>";
+       
+        tablaPincipal += "<tr>"
+                    + "<td>"+ obj.getJSONObject("data").getString("ASESORIA_DETALLE") +"</td>"
+                    + "<td>"+obj.getJSONObject("data").getString("ASESORIA_FECHA")+ "<td>"
+                     + "<td>"+obj.getJSONObject("data").getInt("CONTRATO_ID")+ "<td></tr>";
+
+       
+        tablaPincipal += "</table>";
+        
+        str += tablaPincipal;
+        
+        /**
+         * DETALLE ASESORIA
+         */
+        
+        AsesoriaDetalleService ads = new AsesoriaDetalleService();
+        String asesoriaDetalle = ads.getAsesoriaDetalleById((idAsesoria));
+        JSONObject objDetalle = new JSONObject(asesoriaDetalle);      
+        JSONArray datDetallea = objDetalle.getJSONArray("data");     
+          String detalleAsesria = " <br> <p style='text-align:center'> Detalle Asesoria </p> <br><br>"
+                  + "<table border='1'>"
+                    + "<tr>"
+                        + "<td>Detalle Titulo</td>"
+                        + "<td>Estado</td>"
+                  + "</tr>";
+         for (int i = 0; i < datDetallea.length(); i++) {
+            JSONObject row = datDetallea.getJSONObject(i);
+            String aprob = "";
+            if(row.getInt("ASESORIA_DETALLE_CHECK") == 1){
+                aprob = "Aprobado";
+                
+            }else{
+                aprob = "No Aprobado";
+            }
+            detalleAsesria += "<tr>"
+                    + "<td>"+ row.getString("ASESORIA_DETALLE_TITULO") +"</td>"
+                    + "<td>"+aprob + i + "<td></tr>";
+         }
+         
+        detalleAsesria += "</table>";
+        str += detalleAsesria;
+        HTMLWorker htmlWorker = new HTMLWorker(doc);
+        htmlWorker.parse(new StringReader(str));
+        doc.close();
+        archivo.close();
+        
+        enviaCorreoConAdjunto(ruta, nombrePdf);
+        
+        JOptionPane.showMessageDialog(null, "Pdf correctamente creado");
+    }
+    
+    
+    
+    
+    
+    
+    
+    public void enviaCorreoConAdjunto(String ruta, String nombre) throws MessagingException{
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.setProperty("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.smtp.port", "587");
+        props.setProperty("mail.smtp.user", "nomasaccidentess@gmail.com");
+        props.setProperty("mail.smtp.auth", "true");
+
+        Session session = Session.getDefaultInstance(props, null);
+        session.setDebug(true);
+         // Se compone la parte del texto
+        BodyPart texto = new MimeBodyPart();
+        texto.setText("Se adjunta PDF de Asesoria,Saludos!!");
+
+        // Se compone el adjunto con la imagen
+        BodyPart adjunto = new MimeBodyPart();
+        adjunto.setDataHandler(
+            new DataHandler(new FileDataSource(ruta)));
+        adjunto.setFileName(nombre+".pdf");
+
+        // Una MultiParte para agrupar texto e imagen.
+        MimeMultipart multiParte = new MimeMultipart();
+        multiParte.addBodyPart(texto);
+        multiParte.addBodyPart(adjunto);
+
+        // Se compone el correo, dando to, from, subject y el
+        // contenido.
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress("alex.fredes.l@gmail.com"));
+        message.addRecipient(
+            Message.RecipientType.TO,
+            new InternetAddress("alex.fredes.l@gmail.com"));
+        message.setSubject("Prueba enviando un adjnto");
+        message.setContent(multiParte);
+
+        // Se envia el correo.
+        Transport t = session.getTransport("smtp");
+        t.connect("nomasaccidentess@gmail.com", "fwhbskbqvucomxzb");
+        t.sendMessage(message, message.getAllRecipients());
+        t.close();
+        JOptionPane.showMessageDialog(null, "Correo enviado a cliente");
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
@@ -452,6 +602,7 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         AsesoriaService as = new AsesoriaService();
         
         try {
+            this.generarPdfByAsesoriaId(idAsesoria);
             as.finalizaAsesoria(a, Integer.parseInt(idAsesoria));
             JOptionPane.showMessageDialog(null, "Asesoria Finalizada");
             MantenedorAsesoriaDetalle asesoriaDetalle;

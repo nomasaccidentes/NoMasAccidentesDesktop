@@ -109,6 +109,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(0, 102, 102));
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton4.setText("Reporte Accidente");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(0, 102, 102));
         jButton5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -433,6 +438,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
         MantenedorSolicitudesAceptadas aceptadas = new MantenedorSolicitudesAceptadas();
         aceptadas.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        MantenedorRegistroAccidente accidente = new MantenedorRegistroAccidente();
+        
+        accidente.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
