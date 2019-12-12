@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import models.PagoContrato;
+import models.TipoAsesoria;
 import models.TipoAsesoriaEspecial;
 import org.json.JSONObject;
 
@@ -154,6 +155,50 @@ public class TipoAsesoriaEspecialService {
             
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
               
+            wr.flush();
+            wr.close();
+
+            int responseCode = conn.getResponseCode();
+            
+            if(responseCode == 404){
+                return "404";
+            }
+            
+            
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            JSONObject obj = new JSONObject(response);
+            return response.toString();
+        } catch (Exception e) {
+             throw e;
+        }
+         
+    }
+      
+      public String getTipoAsesoriaByNombre(TipoAsesoriaEspecial tipo) throws Exception{
+        String urlAPi = URL + "tipoAsesoriaEspecial/getTipoAsesoriaByName";
+        try {
+            URL url = new URL(urlAPi);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            JSONObject login = new JSONObject();
+            login.put("asesoriaEspecialNomnbre", tipo.tipoAsesoriaEspecialNombre);
+            
+            conn.setDoOutput(true);
+            
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            
+            
+            wr.writeBytes(login.toString());            
             wr.flush();
             wr.close();
 

@@ -60,9 +60,10 @@ public class MantenedorCliente extends javax.swing.JFrame {
                 String clienteId = jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 0).toString();
                 String clienteNombre = jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 1).toString();
                 String clienteDireccion = jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 2).toString();
-                String clienteRut = jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 3).toString();
-                String clienteEstado = jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 4).toString();
-                String clienteRubro = jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 5).toString();
+                String clienteCorreo = jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 3).toString();
+                String clienteRut = jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 4).toString();
+                String clienteEstado = jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 5).toString();
+                String clienteRubro = jTableClientes.getValueAt(jTableClientes.getSelectedRow(), 6).toString();
                 
                 
                 labelPrueba.setText(clienteId);
@@ -71,7 +72,7 @@ public class MantenedorCliente extends javax.swing.JFrame {
                 txtDireccionClienteEdit.setText(clienteDireccion);
                 
                 txtRutClienteEdit.setText(clienteRut);
-
+                txtCorreoClienteEdit.setText(clienteCorreo);
                 
                 if(clienteEstado.equalsIgnoreCase("1")){
                     radioActivoClienteEdit.setSelected(true);
@@ -103,6 +104,7 @@ public class MantenedorCliente extends javax.swing.JFrame {
         dtm.addColumn("Id");
         dtm.addColumn("Nombre");
         dtm.addColumn("Dirección");
+        dtm.addColumn("Correo");
         dtm.addColumn("Rut");
         dtm.addColumn("Estado");
         dtm.addColumn("Rubro");
@@ -113,7 +115,7 @@ public class MantenedorCliente extends javax.swing.JFrame {
         JSONArray data = obj.getJSONArray("data");               
         for (int i = 0; i < data.length(); i++) {
                 JSONObject row = data.getJSONObject(i);
-                dtm.addRow(new Object[]{row.getInt("cliente_id"),row.getString("cliente_nombre"), row.get("cliente_direccion"), row.get("cliente_rut"), row.getInt("cliente_activo"), row.getJSONObject("rubro").getString("rubro_nombre")});
+                dtm.addRow(new Object[]{row.getInt("cliente_id"),row.getString("cliente_nombre"), row.get("cliente_direccion"), row.get("clienteCorreo"), row.get("cliente_rut"), row.getInt("cliente_activo"), row.getJSONObject("rubro").getString("rubro_nombre")});
         }
         
         return dtm;
@@ -150,6 +152,8 @@ public class MantenedorCliente extends javax.swing.JFrame {
         radioActivoClienteInsert = new javax.swing.JRadioButton();
         radioInactivoInsertCliente = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        txtCorreoCliente = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -164,6 +168,8 @@ public class MantenedorCliente extends javax.swing.JFrame {
         cmbRubroClienteEdit = new javax.swing.JComboBox<Rubro>();
         jButton2 = new javax.swing.JButton();
         labelPrueba = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtCorreoClienteEdit = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -250,6 +256,8 @@ public class MantenedorCliente extends javax.swing.JFrame {
             }
         });
 
+        jLabel12.setText("Correo Cliente");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -268,14 +276,16 @@ public class MantenedorCliente extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel2)
                                         .addComponent(jLabel6)
-                                        .addComponent(jLabel3))
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel12))
                                     .addGap(18, 18, 18)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(txtNombreClienteInsert)
                                         .addComponent(txtRutClienteInsert, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(radioInactivoInsertCliente)
-                                            .addComponent(cmbSelectorRubroCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(cmbSelectorRubroCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtCorreoCliente))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
@@ -288,15 +298,19 @@ public class MantenedorCliente extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNombreClienteInsert, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtCorreoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtRutClienteInsert, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtDireccionClienteInsert, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -309,7 +323,7 @@ public class MantenedorCliente extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cmbSelectorRubroCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(34, 34, 34))
         );
@@ -341,6 +355,8 @@ public class MantenedorCliente extends javax.swing.JFrame {
 
         labelPrueba.setText("jLabel12");
 
+        jLabel13.setText("Correo Cliente");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -367,10 +383,14 @@ public class MantenedorCliente extends javax.swing.JFrame {
                                                 .addComponent(txtDireccionClienteEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel13))
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtNombreClienteEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(49, 49, 49)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtCorreoClienteEdit)
+                                            .addComponent(txtNombreClienteEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(61, 61, 61)
                                 .addComponent(labelPrueba))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,21 +406,29 @@ public class MantenedorCliente extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(194, 194, 194)
                         .addComponent(jButton2)))
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtNombreClienteEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(labelPrueba)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtNombreClienteEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelPrueba))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel13)
+                    .addComponent(txtCorreoClienteEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtRutClienteEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtDireccionClienteEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -413,7 +441,7 @@ public class MantenedorCliente extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(cmbRubroClienteEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(37, 37, 37))
         );
@@ -501,6 +529,7 @@ public class MantenedorCliente extends javax.swing.JFrame {
         cliente.cliente_activo = activo;
         cliente.rubro_id = cmbSelectorRubroCliente.getItemAt(cmbSelectorRubroCliente.getSelectedIndex()).getRubro_id();
         cliente.cliente_rut = txtRutClienteInsert.getText();
+        cliente.clienteCorreo = txtCorreoCliente.getText();
         
         try {
             cs.postCliente(cliente);
@@ -522,13 +551,18 @@ public class MantenedorCliente extends javax.swing.JFrame {
         if(txtNombreClienteEdit.getText().trim().length() == 0){
             JOptionPane.showMessageDialog(null, "Nombre de cliente no peude ser vacio");
             return;
-        }else if(txtDireccionClienteEdit.getText().trim().length() == 0){
+        }
+        
+        if(txtDireccionClienteEdit.getText().trim().length() == 0){
             JOptionPane.showMessageDialog(null, "Dirección de cliente no peude ser vacio");
             return;
-        }else if(txtRutClienteEdit.getText().trim().length() == 0){
+        }
+        if(txtRutClienteEdit.getText().trim().length() == 0){
             JOptionPane.showMessageDialog(null, "Rut de cliente no peude ser vacio");
             return;
-        }else if(cmbRubroClienteEdit.getSelectedIndex() == 0){
+        }
+        
+        if(cmbRubroClienteEdit.getSelectedIndex() == 0){
              JOptionPane.showMessageDialog(null, "Debe seleccionar un rubro para el cliente.");
             return;
         }
@@ -541,7 +575,7 @@ public class MantenedorCliente extends javax.swing.JFrame {
         c.cliente_rut = txtRutClienteEdit.getText();
         c.cliente_direccion = txtDireccionClienteEdit.getText();
         c.rubro_id  = cmbRubroClienteEdit.getItemAt(cmbRubroClienteEdit.getSelectedIndex()).getRubro_id();
-        
+        c.clienteCorreo = txtCorreoClienteEdit.getText();
         int activo = 0;
         if(radioActivoClienteEdit.isSelected()){
             activo = 1;
@@ -616,6 +650,8 @@ public class MantenedorCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -634,6 +670,8 @@ public class MantenedorCliente extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioActivoClienteInsert;
     private javax.swing.JRadioButton radioInactivoClienteEdit;
     private javax.swing.JRadioButton radioInactivoInsertCliente;
+    private javax.swing.JTextField txtCorreoCliente;
+    private javax.swing.JTextField txtCorreoClienteEdit;
     private javax.swing.JTextField txtDireccionClienteEdit;
     private javax.swing.JTextField txtDireccionClienteInsert;
     private javax.swing.JTextField txtNombreClienteEdit;

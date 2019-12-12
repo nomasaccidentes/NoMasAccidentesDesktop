@@ -17,6 +17,7 @@ public class Cliente {
     public int cliente_activo;
     public int rubro_id;
     public Rubro rubro;
+    public String clienteCorreo;
 
     public int getCliente_id() {
         return cliente_id;
@@ -72,6 +73,14 @@ public class Cliente {
 
     public void setRubro(Rubro rubro) {
         this.rubro = rubro;
+    }
+
+    public String getClienteCorreo() {
+        return clienteCorreo;
+    }
+
+    public void setClienteCorreo(String clienteCorreo) {
+        this.clienteCorreo = clienteCorreo;
     }
 
   

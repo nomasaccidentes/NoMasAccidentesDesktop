@@ -71,6 +71,7 @@ public class ClienteService {
             login.put("cliente_activo", cliente.cliente_activo);
             login.put("cliente_rut", cliente.cliente_rut);
             login.put("rubro_id", cliente.rubro_id);
+            login.put("clienteCorreo", cliente.clienteCorreo);
 
             conn.setDoOutput(true);
             
@@ -119,6 +120,7 @@ public class ClienteService {
             login.put("cliente_activo", cliente.cliente_activo);
             login.put("cliente_rut", cliente.cliente_rut);
             login.put("rubro_id", cliente.rubro_id);
+            login.put("clienteCorreo", cliente.clienteCorreo);
 
             conn.setDoOutput(true);
             
@@ -169,6 +171,37 @@ public class ClienteService {
              
              
              return array;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        return null;
+    }
+     
+      public String getClientebyContratoId(int contratoId){
+        String urlAPi = URL + "cliente/getClientebyContratoId/"+contratoId;
+        try {
+            URL url = new URL(urlAPi);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            
+            if(conn.getResponseCode() != 200){
+                 throw new RuntimeException("Failed : HTTP Error code : " + conn.getResponseCode());
+            }
+            
+            
+                        BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            JSONObject obj = new JSONObject(response);
+
+            return response.toString();
+
         } catch (Exception e) {
             System.out.println(e);
         }

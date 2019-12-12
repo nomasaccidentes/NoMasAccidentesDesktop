@@ -203,7 +203,6 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1300, 800));
 
         panelAlmacenaDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle Asesoria"));
 

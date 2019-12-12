@@ -6,6 +6,7 @@
 package principal.Admin;
 
 import api.CapacitacionService;
+import api.ClienteService;
 import api.ContratoService;
 import api.NoMasAccidentesService;
 import api.ProfesionalService;
@@ -17,8 +18,20 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -36,6 +49,9 @@ import org.json.JSONObject;
  */
 public class MantenedorSolicitudCapacitacion extends javax.swing.JFrame {
 
+    
+    int contratoId;
+    String nombreSolicitudCapacitacion;
     /**
      * Creates new form MantenedorSolicitudCapacitacion
      */
@@ -94,9 +110,11 @@ public class MantenedorSolicitudCapacitacion extends javax.swing.JFrame {
          this.jtableSolicitudCapacitacion.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
                public void valueChanged(ListSelectionEvent event) {             
                 String p_id = jtableSolicitudCapacitacion.getValueAt(jtableSolicitudCapacitacion.getSelectedRow(), 0).toString();
+                
+                nombreSolicitudCapacitacion = jtableSolicitudCapacitacion.getValueAt(jtableSolicitudCapacitacion.getSelectedRow(), 1).toString();
                 String contrato_id = jtableSolicitudCapacitacion.getValueAt(jtableSolicitudCapacitacion.getSelectedRow(), 2).toString();
                 String sol_estado = jtableSolicitudCapacitacion.getValueAt(jtableSolicitudCapacitacion.getSelectedRow(), 3).toString();
-                
+                contratoId = Integer.parseInt(contrato_id);
                 lblIdSolicitudCapacitacion.setText(p_id);
                 lblContratoId.setText(contrato_id);
                 for (int i=0; i < cmbEstadoSolicitudCapacitacion.getModel().getSize(); i++)
@@ -370,6 +388,8 @@ public class MantenedorSolicitudCapacitacion extends javax.swing.JFrame {
                 } catch (Exception ex) {
                     Logger.getLogger(MantenedorSolicitudCapacitacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
+                this.enviaCorreoConAdjunto(contratoId, nombreSolicitudCapacitacion);
             }
             
             scs.putSolicitudAsesoria(sc, Integer.parseInt(lblIdSolicitudCapacitacion.getText()));
@@ -392,6 +412,59 @@ public class MantenedorSolicitudCapacitacion extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public void enviaCorreoConAdjunto(int contratoId, String nombre) throws MessagingException{
+        
+        
+        
+        ClienteService clienteService = new ClienteService();
+        
+        String correo = clienteService.getClientebyContratoId(contratoId);
+        JSONObject objTipoAsesoria = new JSONObject(correo);        
+       
+        String clienteCorreo = objTipoAsesoria.getJSONObject("data").getString("CLIENTE_CORREO");      
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.setProperty("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.smtp.port", "587");
+        props.setProperty("mail.smtp.user", "nomasaccidentess@gmail.com");
+        props.setProperty("mail.smtp.auth", "true");
+
+        Session session = Session.getDefaultInstance(props, null);
+        session.setDebug(true);
+         // Se compone la parte del texto
+        BodyPart texto = new MimeBodyPart();
+        texto.setText("Felicidades Tu capacitacion llamada: " + nombre + " ha sido aprobada exitosamente!!");
+
+        // Se compone el adjunto con la imagen
+//        BodyPart adjunto = new MimeBodyPart();
+//        adjunto.setDataHandler(
+//            new DataHandler(new FileDataSource(ruta)));
+//        adjunto.setFileName(nombre+".pdf");
+
+        // Una MultiParte para agrupar texto e imagen.
+        MimeMultipart multiParte = new MimeMultipart();
+        multiParte.addBodyPart(texto);
+//        multiParte.addBodyPart(adjunto);
+
+        // Se compone el correo, dando to, from, subject y el
+        // contenido.
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(clienteCorreo));
+        message.addRecipient(
+            Message.RecipientType.TO,
+            new InternetAddress(clienteCorreo));
+        message.setSubject("Solicitud Asesoria Aprobada");
+        message.setContent(multiParte);
+
+        // Se envia el correo.
+        Transport t = session.getTransport("smtp");
+        t.connect("nomasaccidentess@gmail.com", "fwhbskbqvucomxzb");
+        t.sendMessage(message, message.getAllRecipients());
+        t.close();
+        JOptionPane.showMessageDialog(null, "Correo enviado a cliente");
+    }
+    
+    
     /**
      * @param args the command line arguments
      */

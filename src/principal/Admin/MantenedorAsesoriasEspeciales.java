@@ -5,7 +5,16 @@
  */
 package principal.Admin;
 
+import api.AsesoriaEspecialService;
+import api.CapacitacionDetalleService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import models.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -13,12 +22,63 @@ import models.*;
  */
 public class MantenedorAsesoriasEspeciales extends javax.swing.JFrame {
 
+    String idAsesoriaEspecial;
+    String contratoId;
+    String profesionalId;
+    String tipoAsesoriaId;
     /**
      * Creates new form MantenedorAsesoriasEspeciales
      */
     public MantenedorAsesoriasEspeciales() {
         initComponents();
+        
+        jTableAsesoriasEspeciales.setModel(this.showData());
+           this.jTableAsesoriasEspeciales.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+               public void valueChanged(ListSelectionEvent event) {
+                   // do some actions here, for example
+                   // print first column value from selected row
+                   idAsesoriaEspecial = jTableAsesoriasEspeciales.getValueAt(jTableAsesoriasEspeciales.getSelectedRow(), 0).toString();
+                   profesionalId = jTableAsesoriasEspeciales.getValueAt(jTableAsesoriasEspeciales.getSelectedRow(), 3).toString();
+                   contratoId = jTableAsesoriasEspeciales.getValueAt(jTableAsesoriasEspeciales.getSelectedRow(), 4).toString();
+                   tipoAsesoriaId = jTableAsesoriasEspeciales.getValueAt(jTableAsesoriasEspeciales.getSelectedRow(), 5).toString();
+               }
+           });      
     }
+    
+     public DefaultTableModel showData(){
+         AsesoriaEspecialService as = new AsesoriaEspecialService();
+        DefaultTableModel dtm = new DefaultTableModel();
+        
+        dtm.addColumn("Asesoria Especial Id");
+        dtm.addColumn("Asesoria Especial Nombre");
+        dtm.addColumn("Fecha");
+        dtm.addColumn("Profesional");
+        dtm.addColumn("Contrato");
+        dtm.addColumn("Tipo Asesoria");
+        dtm.addColumn("Finalizada");
+        dtm.addColumn("Comentario");
+        
+        String array = as.getAsesoria();        
+        JSONObject obj = new JSONObject(array);        
+        Usuario u = new Usuario();
+        JSONArray data = obj.getJSONArray("data");               
+        for (int i = 0; i < data.length(); i++) {
+                JSONObject row = data.getJSONObject(i);
+                dtm.addRow(new Object[]{
+                    row.getInt("ASESORIA_ESPECIAL_ID"),
+                    row.get("ASESORIA_ESPECIAL_NOMBRE"), 
+                    row.getString("ASESORIA_ESPECIAL_FECHA"),
+                    row.getString("PROFESIONAL_NOMBRE"),
+                    row.getInt("CONTRATO_ID"),
+                    row.getString("TIPO_ASESORIA_ESPECIAL_NOMBRE"),
+                    row.get("ASESORIA_FINALIZADA"),
+                    row.get("ASESORIA_COMENTARIO_RESOLUCION")
+                
+                });
+        }
+        
+        return dtm;
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,23 +91,22 @@ public class MantenedorAsesoriasEspeciales extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jComboBox1 = new javax.swing.JComboBox<EstadoSolicitudCombobox>();
-        jLabel4 = new javax.swing.JLabel();
-        cmbProfesional = new javax.swing.JComboBox<ProfesionalCombobox>();
-        jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableAsesoriasEspeciales = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Asesorias Especiales");
+
+        jButton1.setText("Volver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -56,17 +115,21 @@ public class MantenedorAsesoriasEspeciales extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(494, 494, 494)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 378, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(84, 84, 84))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAsesoriasEspeciales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -77,21 +140,14 @@ public class MantenedorAsesoriasEspeciales extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableAsesoriasEspeciales);
 
-        jLabel2.setText("Resolucion");
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
-
-        jLabel3.setText("Fecha Asesoria");
-
-        jLabel4.setText("Estado Asesoria");
-
-        jLabel5.setText("Profesional");
-
-        jButton1.setText("Editar Solicitud");
+        jButton2.setText("Ver Detalle Asesoria");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,28 +157,12 @@ public class MantenedorAsesoriasEspeciales extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(181, 181, 181)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel5))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                                            .addComponent(cmbProfesional, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addComponent(jButton1))))
-                        .addGap(0, 222, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(516, 516, 516)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,30 +171,29 @@ public class MantenedorAsesoriasEspeciales extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbProfesional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addGap(105, 105, 105)
+                .addComponent(jButton2)
+                .addContainerGap(226, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            // TODO add your handling code here:
+
+            MantenedorAsesoriasEspecialesDetalle asesoriasEspecialesDetalle = new MantenedorAsesoriasEspecialesDetalle(idAsesoriaEspecial, profesionalId, contratoId, tipoAsesoriaId);
+            asesoriasEspecialesDetalle.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(MantenedorAsesoriasEspeciales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,19 +231,11 @@ public class MantenedorAsesoriasEspeciales extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<ProfesionalCombobox> cmbProfesional;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<EstadoSolicitudCombobox> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable jTableAsesoriasEspeciales;
     // End of variables declaration//GEN-END:variables
 }
