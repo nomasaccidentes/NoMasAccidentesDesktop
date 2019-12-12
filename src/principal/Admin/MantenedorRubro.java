@@ -23,6 +23,8 @@ import org.json.JSONObject;
  */
 public class MantenedorRubro extends javax.swing.JFrame {
 
+    
+    String idRubro;
     /**
      * Creates new form MantenedorRubro
      */
@@ -33,6 +35,8 @@ public class MantenedorRubro extends javax.swing.JFrame {
          this.jTableRubro.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
                 String rubroId = jTableRubro.getValueAt(jTableRubro.getSelectedRow(), 0).toString();
+                
+                idRubro = rubroId;
                 String rubroEstado = jTableRubro.getValueAt(jTableRubro.getSelectedRow(), 1).toString();
                 String rubroActivo = jTableRubro.getValueAt(jTableRubro.getSelectedRow(), 2).toString();
                 txtNombreRubroEdit.setText(rubroEstado);
@@ -326,11 +330,15 @@ public class MantenedorRubro extends javax.swing.JFrame {
       
         RubroService rs = new RubroService();
         
-        int idRubro = Integer.parseInt(lblIdRubroEdit.getText());
+//        int idRubro = Integer.parseInt(lblIdRubroEdit.getText());
         
         try {
-            rs.deleteRubro(idRubro);
+            rs.deleteRubro(Integer.parseInt(idRubro));
             JOptionPane.showMessageDialog(null, "Rubro Eliminado Correctamente");
+            
+            this.setVisible(false);
+            MantenedorRubro mantenedorRubro = new MantenedorRubro();
+            mantenedorRubro.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(MantenedorRubro.class.getName()).log(Level.SEVERE, null, ex);
         }

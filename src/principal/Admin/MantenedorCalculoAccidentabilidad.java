@@ -80,6 +80,7 @@ public class MantenedorCalculoAccidentabilidad extends javax.swing.JFrame {
         lblResultadoAccidentabilidad = new javax.swing.JLabel();
         lblResumenTotal = new javax.swing.JLabel();
         labelExplicacionCalculo = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,7 +94,7 @@ public class MantenedorCalculoAccidentabilidad extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(348, Short.MAX_VALUE)
+                .addContainerGap(201, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(98, 98, 98)
                 .addComponent(labelContratoId)
@@ -130,55 +131,68 @@ public class MantenedorCalculoAccidentabilidad extends javax.swing.JFrame {
 
         lblResumenTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        labelExplicacionCalculo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelExplicacionCalculo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelExplicacionCalculo.setText("jLabel7");
+
+        jButton1.setText("Volver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(88, 88, 88))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(438, 438, 438)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelCantRegistroAccidente)
+                                .addGap(43, 43, 43)
+                                .addComponent(jLabel3)
+                                .addGap(37, 37, 37)
+                                .addComponent(jLabel4))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel6)
+                        .addGap(42, 42, 42)
+                        .addComponent(lblResultadoAccidentabilidad))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(355, 355, 355)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(438, 438, 438)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelCantRegistroAccidente)
-                                        .addGap(43, 43, 43)
-                                        .addComponent(jLabel3)
-                                        .addGap(37, 37, 37)
-                                        .addComponent(jLabel4))
-                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(33, 33, 33)
-                                .addComponent(jLabel6)
-                                .addGap(42, 42, 42)
-                                .addComponent(lblResultadoAccidentabilidad))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(355, 355, 355)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(53, 53, 53)
-                                        .addComponent(lblCantidadTrabajadores))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(273, 273, 273)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(labelExplicacionCalculo)
-                                    .addComponent(lblResumenTotal))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(jLabel5)
+                                .addGap(53, 53, 53)
+                                .addComponent(lblCantidadTrabajadores))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(329, 329, 329)
+                        .addComponent(lblResumenTotal))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(labelExplicacionCalculo)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton1)))
                 .addGap(188, 188, 188)
                 .addComponent(jLabel2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,15 +213,21 @@ public class MantenedorCalculoAccidentabilidad extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(lblCantidadTrabajadores))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
-                .addComponent(lblResumenTotal)
-                .addGap(55, 55, 55)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
                 .addComponent(labelExplicacionCalculo)
-                .addGap(83, 83, 83))
+                .addGap(15, 15, 15)
+                .addComponent(lblResumenTotal)
+                .addGap(160, 160, 160))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,6 +265,7 @@ public class MantenedorCalculoAccidentabilidad extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

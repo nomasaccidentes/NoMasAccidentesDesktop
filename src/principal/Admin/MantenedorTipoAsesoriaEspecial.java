@@ -209,6 +209,11 @@ public class MantenedorTipoAsesoriaEspecial extends javax.swing.JFrame {
         );
 
         jButton3.setText("Eliminar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -292,6 +297,27 @@ public class MantenedorTipoAsesoriaEspecial extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        TipoAsesoriaEspecialService asesoriaEspecialService = new TipoAsesoriaEspecialService();
+        
+        try {
+            asesoriaEspecialService.deleteTipoAseasoria(Integer.parseInt(id));
+            
+            JOptionPane.showMessageDialog(null, "Tipo Asesoria especial eliminado");
+            
+            this.setVisible(false);
+            
+            MantenedorTipoAsesoriaEspecial asesoriaEspecial = new MantenedorTipoAsesoriaEspecial();
+            
+            asesoriaEspecial.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(MantenedorTipoAsesoriaEspecial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

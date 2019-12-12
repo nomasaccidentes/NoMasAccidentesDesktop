@@ -38,6 +38,8 @@ public class MantendorContrato extends javax.swing.JFrame {
         initComponents();
         this.jTableContratos.setModel(this.showData());
         
+        lblClienteid.setVisible(false);
+        lblContratoId.setVisible(false);
          ClienteService cs = new ClienteService();
         
         String array = cs.getCliente();     

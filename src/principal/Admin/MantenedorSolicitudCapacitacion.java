@@ -453,7 +453,7 @@ public class MantenedorSolicitudCapacitacion extends javax.swing.JFrame {
         message.addRecipient(
             Message.RecipientType.TO,
             new InternetAddress(clienteCorreo));
-        message.setSubject("Solicitud Asesoria Aprobada");
+        message.setSubject("Solicitud Capacitacion Aprobada");
         message.setContent(multiParte);
 
         // Se envia el correo.

@@ -6,6 +6,7 @@
 package principal.Admin;
 
 import api.AsesoriaService;
+import api.ClienteService;
 import api.NoMasAccidentesService;
 import api.ProfesionalService;
 import api.RubroService;
@@ -15,8 +16,18 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -37,6 +48,9 @@ import org.json.JSONObject;
 public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
 
     String nombreTipoAsesoria;
+    
+    String contratoIdEnvio;
+    String descripcion ; 
     /**
      * Creates new form MantenedorSolicitudAsesoria
      */
@@ -64,10 +78,11 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
          this.jTableSolicitudAsesoria.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
                public void valueChanged(ListSelectionEvent event) {             
                 String p_id = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 0).toString();
+                descripcion = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 1).toString();
                 String contrato_id = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 2).toString();
                 String sol_estado = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 3).toString();
                 nombreTipoAsesoria = jTableSolicitudAsesoria.getValueAt(jTableSolicitudAsesoria.getSelectedRow(), 7).toString();
-                
+                contratoIdEnvio = contrato_id;
                 lblContratoIdAsesoria.setText(contrato_id);
                 lblEditaSolicitudAsesoria.setText(p_id);
                 for (int i=0; i < cmbEstadoSolicitud.getModel().getSize(); i++)
@@ -393,6 +408,7 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
                 }
             }
             asesoriaService.putSolicitudAsesoria(asesoria, id);
+            enviaCorreoConAdjunto(Integer.parseInt(contratoIdEnvio), descripcion);
             JOptionPane.showMessageDialog(null, "Solicitud Aprobada");
             
             this.setVisible(false);
@@ -405,6 +421,62 @@ public class MantenedorSolicitudAsesoria extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    
+    
+     public void enviaCorreoConAdjunto(int contratoId, String nombre) throws MessagingException{
+        
+        
+        
+        ClienteService clienteService = new ClienteService();
+        
+        String correo = clienteService.getClientebyContratoId(contratoId);
+        JSONObject objTipoAsesoria = new JSONObject(correo);        
+       
+        String clienteCorreo = objTipoAsesoria.getJSONObject("data").getString("CLIENTE_CORREO");     
+        
+         System.out.println(clienteCorreo);
+         
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.setProperty("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.smtp.port", "587");
+        props.setProperty("mail.smtp.user", "nomasaccidentess@gmail.com");
+        props.setProperty("mail.smtp.auth", "true");
+
+        Session session = Session.getDefaultInstance(props, null);
+        session.setDebug(true);
+         // Se compone la parte del texto
+        BodyPart texto = new MimeBodyPart();
+        texto.setText("Felicidades Tu Asesoria llamada: " + nombre + " ha sido aprobada exitosamente!!");
+
+        // Se compone el adjunto con la imagen
+//        BodyPart adjunto = new MimeBodyPart();
+//        adjunto.setDataHandler(
+//            new DataHandler(new FileDataSource(ruta)));
+//        adjunto.setFileName(nombre+".pdf");
+
+        // Una MultiParte para agrupar texto e imagen.
+        MimeMultipart multiParte = new MimeMultipart();
+        multiParte.addBodyPart(texto);
+//        multiParte.addBodyPart(adjunto);
+
+        // Se compone el correo, dando to, from, subject y el
+        // contenido.
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(clienteCorreo));
+        message.addRecipient(
+            Message.RecipientType.TO,
+            new InternetAddress(clienteCorreo));
+        message.setSubject("Solicitud Asesoria Aprobada");
+        message.setContent(multiParte);
+
+        // Se envia el correo.
+        Transport t = session.getTransport("smtp");
+        t.connect("nomasaccidentess@gmail.com", "fwhbskbqvucomxzb");
+        t.sendMessage(message, message.getAllRecipients());
+        t.close();
+        JOptionPane.showMessageDialog(null, "Correo enviado a cliente");
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 

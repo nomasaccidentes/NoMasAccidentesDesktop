@@ -135,7 +135,7 @@ public class RubroService {
     }
       
     public String deleteRubro(int id) throws Exception{
-        String urlAPi = URL + "rubro/DeleteRubro"+id;
+        String urlAPi = URL + "rubro/DeleteRubro/"+id;
         try {
             URL url = new URL(urlAPi);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

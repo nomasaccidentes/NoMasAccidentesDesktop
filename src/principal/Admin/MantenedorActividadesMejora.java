@@ -237,6 +237,11 @@ public class MantenedorActividadesMejora extends javax.swing.JFrame {
         );
 
         jButton4.setText("Eliminar Actividad");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -326,6 +331,21 @@ public class MantenedorActividadesMejora extends javax.swing.JFrame {
             Logger.getLogger(MantenedorActividadesMejora.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        ActividadMejoraService actividadMejoraService = new ActividadMejoraService();
+        
+        try {
+            actividadMejoraService.deleteActividadMejora(Integer.parseInt(idMejora));
+            JOptionPane.showMessageDialog(null, "Actividad de mejora eliminado");
+            MantenedorActividadesMejora asesoriaDetalle = new MantenedorActividadesMejora(idAsesoriaActividad);
+            asesoriaDetalle.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(MantenedorActividadesMejora.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

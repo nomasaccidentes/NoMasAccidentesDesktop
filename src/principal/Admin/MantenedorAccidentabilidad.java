@@ -53,7 +53,7 @@ public class MantenedorAccidentabilidad extends javax.swing.JFrame {
         dtm.addColumn("Num. Trabajadores");
         dtm.addColumn("Estado Contrato");
         
-        String array = contratoService.getContrato();        
+        String array = contratoService.getContratoByAccidentes();        
         JSONObject obj = new JSONObject(array);        
         Usuario u = new Usuario();
         JSONArray data = obj.getJSONArray("data");               

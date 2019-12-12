@@ -8,6 +8,7 @@ package principal.Admin;
 import api.ActividadMejoraService;
 import api.AsesoriaDetalleService;
 import api.AsesoriaService;
+import api.ClienteService;
 import api.TipoAsesoriaService;
 import com.google.gson.JsonObject;
 import com.itextpdf.text.Document;
@@ -461,7 +462,6 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         AsesoriaService as = new AsesoriaService();
         String asesoria = as.getAsesoriaById(Integer.parseInt(idAsesoria));
         String nombrePdf = "Asesoria-"+idContrato+"-"+idAsesoria+"";
-        String textoDetallePdf = "lalalalala";
         String ruta = "/Users/AlexF/Documents/pdfprueba/"+  nombrePdf +".pdf";
         FileOutputStream archivo = new FileOutputStream(ruta);
         Document doc = new Document();
@@ -509,7 +509,7 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
             }
             detalleAsesria += "<tr>"
                     + "<td>"+ row.getString("ASESORIA_DETALLE_TITULO") +"</td>"
-                    + "<td>"+aprob + i + "<td></tr>";
+                    + "<td>"+aprob+ "<td></tr>";
          }
          
         detalleAsesria += "</table>";
@@ -531,6 +531,16 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
     
     
     public void enviaCorreoConAdjunto(String ruta, String nombre) throws MessagingException{
+        
+        
+                
+        ClienteService clienteService = new ClienteService();
+        
+        String correo = clienteService.getClientebyContratoId(Integer.parseInt(idContrato));
+        JSONObject objTipoAsesoria = new JSONObject(correo);        
+       
+        String clienteCorreo = objTipoAsesoria.getJSONObject("data").getString("CLIENTE_CORREO");     
+        
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.starttls.enable", "true");
@@ -558,11 +568,11 @@ public class MantenedorAsesoriaDetalle extends javax.swing.JFrame {
         // Se compone el correo, dando to, from, subject y el
         // contenido.
         MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("alex.fredes.l@gmail.com"));
+        message.setFrom(new InternetAddress(clienteCorreo));
         message.addRecipient(
             Message.RecipientType.TO,
-            new InternetAddress("alex.fredes.l@gmail.com"));
-        message.setSubject("Prueba enviando un adjnto");
+            new InternetAddress(clienteCorreo));
+        message.setSubject("Se adjunta cierre de Asesoria");
         message.setContent(multiParte);
 
         // Se envia el correo.

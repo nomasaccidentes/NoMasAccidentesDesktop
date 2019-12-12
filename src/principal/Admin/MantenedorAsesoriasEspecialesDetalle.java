@@ -44,6 +44,7 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import models.Asesoria;
 import models.AsesoriaEspecial;
 import models.AsesoriaEspecialDetalle;
 import models.TipoAsesoria;
@@ -133,18 +134,22 @@ public class MantenedorAsesoriasEspecialesDetalle extends javax.swing.JFrame {
                     
                     idElemento +=1;
                     posicion += 50;
+                    
+                   
             }
+            this.botonAgregaDetalleEspecial.setVisible(false);
+            this.btnCierraDetalleEspecial.setVisible(false);
         }else{
             this.botonAgregaDetalleEspecial.setVisible(true);
             this.btnCierraDetalleEspecial.setVisible(true);
-            this.panelFinalizaAsesoriaEsepecial.setVisible(true);
+            this.panelFinalizaAsesoriaEsepecials.setVisible(true);
         }
         
         
         
         if(asesoriaFinalizada == 1){
 //            btnAgregarActividadMejora.setVisible(false);
-            btnFinalizaAseasoriaEspecial.setVisible(false);
+            btnFinalizaAsesoriaEspecial.setVisible(false);
             botonAgregaDetalleEspecial.setVisible(false);
             btnCierraDetalleEspecial.setVisible(false);
             btnReportarAccidente.setVisible(false);
@@ -175,11 +180,11 @@ public class MantenedorAsesoriasEspecialesDetalle extends javax.swing.JFrame {
         panelAlmacenaDetalleEspecial = new javax.swing.JPanel();
         btnCierraDetalleEspecial = new javax.swing.JButton();
         botonAgregaDetalleEspecial = new javax.swing.JButton();
-        panelFinalizaAsesoriaEsepecial = new javax.swing.JPanel();
-        btnFinalizaAseasoriaEspecial = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        panelFinalizaAsesoriaEsepecials = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txaComentarioCierreEspecial = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
+        btnFinalizaAsesoriaEspecial = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -187,8 +192,6 @@ public class MantenedorAsesoriasEspecialesDetalle extends javax.swing.JFrame {
         jLabel1.setText("Detalle de Asesoria Especial N° :");
 
         lblIdAsesoriaDetalle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        lblIdAsesoriaDetalleDet.setText("jLabel3");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -233,76 +236,73 @@ public class MantenedorAsesoriasEspecialesDetalle extends javax.swing.JFrame {
             }
         });
 
-        panelFinalizaAsesoriaEsepecial.setBorder(javax.swing.BorderFactory.createTitledBorder("Finalizar Asesoria"));
-
-        btnFinalizaAseasoriaEspecial.setText("Agregar Comentario Y Finalizar Asesoria");
-        btnFinalizaAseasoriaEspecial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFinalizaAseasoriaEspecialActionPerformed(evt);
-            }
-        });
-
-        txaComentarioCierreEspecial.setColumns(20);
-        txaComentarioCierreEspecial.setRows(5);
-        jScrollPane1.setViewportView(txaComentarioCierreEspecial);
-
-        jLabel2.setText("Comentario");
-
-        javax.swing.GroupLayout panelFinalizaAsesoriaEsepecialLayout = new javax.swing.GroupLayout(panelFinalizaAsesoriaEsepecial);
-        panelFinalizaAsesoriaEsepecial.setLayout(panelFinalizaAsesoriaEsepecialLayout);
-        panelFinalizaAsesoriaEsepecialLayout.setHorizontalGroup(
-            panelFinalizaAsesoriaEsepecialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFinalizaAsesoriaEsepecialLayout.createSequentialGroup()
-                .addContainerGap(56, Short.MAX_VALUE)
-                .addComponent(btnFinalizaAseasoriaEspecial)
-                .addGap(61, 61, 61))
-            .addGroup(panelFinalizaAsesoriaEsepecialLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelFinalizaAsesoriaEsepecialLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-        );
-        panelFinalizaAsesoriaEsepecialLayout.setVerticalGroup(
-            panelFinalizaAsesoriaEsepecialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFinalizaAsesoriaEsepecialLayout.createSequentialGroup()
-                .addContainerGap(74, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(btnFinalizaAseasoriaEspecial)
-                .addGap(49, 49, 49))
-        );
-
         javax.swing.GroupLayout panelAlmacenaDetalleEspecialLayout = new javax.swing.GroupLayout(panelAlmacenaDetalleEspecial);
         panelAlmacenaDetalleEspecial.setLayout(panelAlmacenaDetalleEspecialLayout);
         panelAlmacenaDetalleEspecialLayout.setHorizontalGroup(
             panelAlmacenaDetalleEspecialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAlmacenaDetalleEspecialLayout.createSequentialGroup()
-                .addContainerGap(637, Short.MAX_VALUE)
+                .addContainerGap(188, Short.MAX_VALUE)
                 .addGroup(panelAlmacenaDetalleEspecialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlmacenaDetalleEspecialLayout.createSequentialGroup()
-                        .addGroup(panelAlmacenaDetalleEspecialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCierraDetalleEspecial, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(botonAgregaDetalleEspecial, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(412, 412, 412))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlmacenaDetalleEspecialLayout.createSequentialGroup()
-                        .addComponent(panelFinalizaAsesoriaEsepecial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addComponent(btnCierraDetalleEspecial, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botonAgregaDetalleEspecial, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(412, 412, 412))
         );
         panelAlmacenaDetalleEspecialLayout.setVerticalGroup(
             panelAlmacenaDetalleEspecialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlmacenaDetalleEspecialLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(botonAgregaDetalleEspecial)
-                .addGap(12, 12, 12)
-                .addComponent(panelFinalizaAsesoriaEsepecial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 557, Short.MAX_VALUE)
                 .addComponent(btnCierraDetalleEspecial)
                 .addGap(30, 30, 30))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelFinalizaAsesoriaEsepecials.setBorder(javax.swing.BorderFactory.createTitledBorder("Finalizar Asesoria"));
+
+        txaComentarioCierreEspecial.setColumns(20);
+        txaComentarioCierreEspecial.setRows(5);
+        jScrollPane1.setViewportView(txaComentarioCierreEspecial);
+
+        btnFinalizaAsesoriaEspecial.setText("Comentar y Finalizar Asesoria Especial");
+        btnFinalizaAsesoriaEspecial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizaAsesoriaEspecialActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelFinalizaAsesoriaEsepecialsLayout = new javax.swing.GroupLayout(panelFinalizaAsesoriaEsepecials);
+        panelFinalizaAsesoriaEsepecials.setLayout(panelFinalizaAsesoriaEsepecialsLayout);
+        panelFinalizaAsesoriaEsepecialsLayout.setHorizontalGroup(
+            panelFinalizaAsesoriaEsepecialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFinalizaAsesoriaEsepecialsLayout.createSequentialGroup()
+                .addContainerGap(56, Short.MAX_VALUE)
+                .addGroup(panelFinalizaAsesoriaEsepecialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFinalizaAsesoriaEsepecialsLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFinalizaAsesoriaEsepecialsLayout.createSequentialGroup()
+                        .addComponent(btnFinalizaAsesoriaEspecial)
+                        .addGap(49, 49, 49))))
+        );
+        panelFinalizaAsesoriaEsepecialsLayout.setVerticalGroup(
+            panelFinalizaAsesoriaEsepecialsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFinalizaAsesoriaEsepecialsLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81)
+                .addComponent(btnFinalizaAsesoriaEspecial)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -312,20 +312,34 @@ public class MantenedorAsesoriasEspecialesDetalle extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelAlmacenaDetalleEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                        .addComponent(panelFinalizaAsesoriaEsepecials, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(panelAlmacenaDetalleEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(panelAlmacenaDetalleEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelFinalizaAsesoriaEsepecials, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(152, 152, 152))))
         );
 
         pack();
@@ -412,19 +426,19 @@ public class MantenedorAsesoriasEspecialesDetalle extends javax.swing.JFrame {
 
     }//GEN-LAST:event_botonAgregaDetalleEspecialActionPerformed
 
-    private void btnFinalizaAseasoriaEspecialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizaAseasoriaEspecialActionPerformed
+    private void btnFinalizaAsesoriaEspecialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizaAsesoriaEspecialActionPerformed
         // TODO add your handling code here:
-
+        
         AsesoriaEspecial a  = new AsesoriaEspecial();
         a.asesoriaComentarioResolucion = txaComentarioCierreEspecial.getText();
         a.asesoriaFinalizada = 1;
-
+        
         AsesoriaEspecialService as = new AsesoriaEspecialService();
-
+        
         try {
             this.generarPdfByAsesoriaId(asesoriaEspecialID);
             as.finalizaAsesoria(a, Integer.parseInt(asesoriaEspecialID));
-            JOptionPane.showMessageDialog(null, "Asesoria Finalizada");
+            JOptionPane.showMessageDialog(null, "Asesoria Especial Finalizada");
             MantenedorAsesoriasEspecialesDetalle asesoriaDetalle;
             try {
                 asesoriaDetalle = new MantenedorAsesoriasEspecialesDetalle(asesoriaEspecialID, profesionalId, contratoId, tipoAsesoriaId);
@@ -436,7 +450,7 @@ public class MantenedorAsesoriasEspecialesDetalle extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(MantenedorAsesoriaDetalle.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnFinalizaAseasoriaEspecialActionPerformed
+    }//GEN-LAST:event_btnFinalizaAsesoriaEspecialActionPerformed
 
     
     
@@ -622,15 +636,15 @@ public class MantenedorAsesoriasEspecialesDetalle extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregaDetalleEspecial;
     private javax.swing.JButton btnCierraDetalleEspecial;
-    private javax.swing.JButton btnFinalizaAseasoriaEspecial;
+    private javax.swing.JButton btnFinalizaAsesoriaEspecial;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblIdAsesoriaDetalle;
     private javax.swing.JLabel lblIdAsesoriaDetalleDet;
     private javax.swing.JPanel panelAlmacenaDetalleEspecial;
-    private javax.swing.JPanel panelFinalizaAsesoriaEsepecial;
+    private javax.swing.JPanel panelFinalizaAsesoriaEsepecials;
     private javax.swing.JTextArea txaComentarioCierreEspecial;
     // End of variables declaration//GEN-END:variables
 }
